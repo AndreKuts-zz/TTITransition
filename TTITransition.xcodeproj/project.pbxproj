@@ -54,14 +54,30 @@
 		782FD9FF20762246006A3C0C /* TTITransition */ = {
 			isa = PBXGroup;
 			children = (
+				782FDA13207625DE006A3C0C /* View */,
+				782FDA12207625CF006A3C0C /* Models */,
 				782FDA0020762246006A3C0C /* AppDelegate.swift */,
-				782FDA0220762246006A3C0C /* ViewController.swift */,
 				782FDA0420762246006A3C0C /* Main.storyboard */,
 				782FDA072076224A006A3C0C /* Assets.xcassets */,
 				782FDA092076224A006A3C0C /* LaunchScreen.storyboard */,
 				782FDA0C2076224A006A3C0C /* Info.plist */,
 			);
 			path = TTITransition;
+			sourceTree = "<group>";
+		};
+		782FDA12207625CF006A3C0C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		782FDA13207625DE006A3C0C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				782FDA0220762246006A3C0C /* ViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
