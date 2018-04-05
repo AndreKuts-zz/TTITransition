@@ -13,16 +13,12 @@ class NewsTableViewCell: UITableViewCell {
     @IBOutlet weak var iconNews: UIImageView!
     @IBOutlet weak var textNews: UILabel!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }

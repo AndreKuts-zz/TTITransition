@@ -10,18 +10,21 @@ import UIKit
 
 class DetailsViewController: UIViewController {
 
-    var text = ""
+    var news: NewsItem? 
     
     @IBOutlet weak var newsDetailsImage: UIImageView!
     @IBOutlet weak var newsDetailsText: UILabel!
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        guard news != nil else { return }
+        if let img = news?.image {
+            newsDetailsImage.image = img
+        }
+        if let txt = news?.text {
+            newsDetailsText.text = txt
+        }
     }
 
 }
-
-

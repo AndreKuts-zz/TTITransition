@@ -27,7 +27,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="286" height="94.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="6mg-qZ-mgE">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="001-sd-card" translatesAutoresizingMaskIntoConstraints="NO" id="6mg-qZ-mgE">
                                             <rect key="frame" x="16" y="13" width="68" height="68"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="68" id="nPh-Am-h5H"/>
@@ -71,9 +71,13 @@
                                 <segment title="Top"/>
                                 <segment title="Best"/>
                             </segments>
+                            <connections>
+                                <action selector="segmentControl:" destination="j1x-7Q-fGe" eventType="valueChanged" id="MLb-Wg-BDf"/>
+                            </connections>
                         </segmentedControl>
                     </navigationItem>
                     <connections>
+                        <outlet property="segmentOutlet" destination="NgZ-sK-Dp7" id="aCg-hf-9n8"/>
                         <segue destination="egi-g1-1zO" kind="show" identifier="showDetails" id="tz3-QM-gej"/>
                     </connections>
                 </tableViewController>
@@ -141,6 +145,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="001-sd-card" width="256" height="256"/>
         <image name="002-coffee" width="256" height="256"/>
     </resources>
 </document>
