@@ -18,6 +18,8 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        newsDetailsText.clipsToBounds = true
+        newsDetailsText.layer.cornerRadius = 10
         guard news != nil, let img = news?.image, let txt = news?.text else { return }
         newsDetailsImage.image = img
         newsDetailsText.text = txt
