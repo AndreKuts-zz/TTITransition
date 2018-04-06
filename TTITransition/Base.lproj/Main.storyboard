@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" rowHeight="95" id="rlL-3z-0CY" customClass="NewsTableViewCell" customModule="TTITransition" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="NewsTableViewCell" rowHeight="95" id="rlL-3z-0CY" customClass="NewsTableViewCell" customModule="TTITransition" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="320" height="95"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rlL-3z-0CY" id="rbL-gz-59G">
@@ -80,7 +80,7 @@
                         </segmentedControl>
                     </navigationItem>
                     <connections>
-                        <outlet property="segmentOutlet" destination="NgZ-sK-Dp7" id="aCg-hf-9n8"/>
+                        <outlet property="newsTypeSelector" destination="NgZ-sK-Dp7" id="aCg-hf-9n8"/>
                         <segue destination="egi-g1-1zO" kind="show" identifier="showDetails" id="tz3-QM-gej"/>
                     </connections>
                 </tableViewController>

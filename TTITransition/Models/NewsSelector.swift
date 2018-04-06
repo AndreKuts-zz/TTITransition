@@ -9,5 +9,5 @@
 import Foundation
 
 enum NewsSelection {
-    case New, Top, Best
+    case new, top, best
 }

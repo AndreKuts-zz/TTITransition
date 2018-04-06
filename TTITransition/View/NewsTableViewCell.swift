@@ -22,3 +22,12 @@ class NewsTableViewCell: UITableViewCell {
     }
 
 }
+
+
+extension UITableViewCell {
+    
+    static var reuseIdentifier: String {
+        return String(describing: self)
+    }
+    
+}
