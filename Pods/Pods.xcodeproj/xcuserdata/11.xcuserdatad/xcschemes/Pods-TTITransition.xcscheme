@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9D7921E779109E5BDB8484C2B3BBDAA2"
+               BlueprintIdentifier = "0C45B27F5FE731CE8D99C6454C5DBA3E"
                BuildableName = "Pods_TTITransition.framework"
                BlueprintName = "Pods-TTITransition"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9D7921E779109E5BDB8484C2B3BBDAA2"
+            BlueprintIdentifier = "0C45B27F5FE731CE8D99C6454C5DBA3E"
             BuildableName = "Pods_TTITransition.framework"
             BlueprintName = "Pods-TTITransition"
             ReferencedContainer = "container:Pods.xcodeproj">

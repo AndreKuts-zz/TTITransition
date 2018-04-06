@@ -6,10 +6,7 @@
 //  Copyright © 2018 ANDRE.CORP. All rights reserved.
 //
 
-import Foundation
 import UIKit
-
-
 
 class NewsItem {
     
@@ -22,6 +19,3 @@ class NewsItem {
     }
 }
 
-enum Segment {
-    case New, Top, Best
-}

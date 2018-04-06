@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F8F139D2AF8C7C6BEC0620C /* Pods_TTITransition.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38CD9B79CDFACCFA97C12CA4 /* Pods_TTITransition.framework */; };
+		10C581769D76039D31174FE2 /* Pods_TTITransition.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57B064DAD030C86F20FE413E /* Pods_TTITransition.framework */; };
 		7823ACAE2077539300985A41 /* LoadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7823ACAD2077539300985A41 /* LoadRequest.swift */; };
 		782FDA0120762246006A3C0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782FDA0020762246006A3C0C /* AppDelegate.swift */; };
 		782FDA0320762246006A3C0C /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782FDA0220762246006A3C0C /* DetailsViewController.swift */; };
@@ -17,10 +17,12 @@
 		782FDA1820764CC3006A3C0C /* NewsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782FDA1720764CC3006A3C0C /* NewsItem.swift */; };
 		782FDA1B20764F07006A3C0C /* NewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782FDA1A20764F07006A3C0C /* NewsTableViewController.swift */; };
 		782FDA1D20764F22006A3C0C /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782FDA1C20764F22006A3C0C /* NewsTableViewCell.swift */; };
+		784B77F120778A8E00A719AA /* NewsSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B77F020778A8E00A719AA /* NewsSelector.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		38CD9B79CDFACCFA97C12CA4 /* Pods_TTITransition.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TTITransition.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		36E0A906991FE244D48AE060 /* Pods-TTITransition.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTITransition.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TTITransition/Pods-TTITransition.debug.xcconfig"; sourceTree = "<group>"; };
+		57B064DAD030C86F20FE413E /* Pods_TTITransition.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TTITransition.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7823ACAD2077539300985A41 /* LoadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadRequest.swift; sourceTree = "<group>"; };
 		782FD9FD20762246006A3C0C /* TTITransition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TTITransition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		782FDA0020762246006A3C0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -32,8 +34,8 @@
 		782FDA1720764CC3006A3C0C /* NewsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsItem.swift; sourceTree = "<group>"; };
 		782FDA1A20764F07006A3C0C /* NewsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewController.swift; sourceTree = "<group>"; };
 		782FDA1C20764F22006A3C0C /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
-		8934A11A297C5CC875581F9A /* Pods-TTITransition.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTITransition.release.xcconfig"; path = "Pods/Target Support Files/Pods-TTITransition/Pods-TTITransition.release.xcconfig"; sourceTree = "<group>"; };
-		DA121FA4CE31DA595EA5ACE3 /* Pods-TTITransition.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTITransition.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TTITransition/Pods-TTITransition.debug.xcconfig"; sourceTree = "<group>"; };
+		784B77F020778A8E00A719AA /* NewsSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsSelector.swift; sourceTree = "<group>"; };
+		B43149E123715C295E42AEE1 /* Pods-TTITransition.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTITransition.release.xcconfig"; path = "Pods/Target Support Files/Pods-TTITransition/Pods-TTITransition.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F8F139D2AF8C7C6BEC0620C /* Pods_TTITransition.framework in Frameworks */,
+				10C581769D76039D31174FE2 /* Pods_TTITransition.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +96,7 @@
 			children = (
 				782FDA1720764CC3006A3C0C /* NewsItem.swift */,
 				7823ACAD2077539300985A41 /* LoadRequest.swift */,
+				784B77F020778A8E00A719AA /* NewsSelector.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -110,8 +113,8 @@
 		ADA5273138CAAA428ED6CEC3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				DA121FA4CE31DA595EA5ACE3 /* Pods-TTITransition.debug.xcconfig */,
-				8934A11A297C5CC875581F9A /* Pods-TTITransition.release.xcconfig */,
+				36E0A906991FE244D48AE060 /* Pods-TTITransition.debug.xcconfig */,
+				B43149E123715C295E42AEE1 /* Pods-TTITransition.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -119,7 +122,7 @@
 		BD8E4A8F067D7183D97D4C67 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				38CD9B79CDFACCFA97C12CA4 /* Pods_TTITransition.framework */,
+				57B064DAD030C86F20FE413E /* Pods_TTITransition.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -135,7 +138,6 @@
 				782FD9F920762246006A3C0C /* Sources */,
 				782FD9FA20762246006A3C0C /* Frameworks */,
 				782FD9FB20762246006A3C0C /* Resources */,
-				51509EA643B48264CCE47722 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -193,24 +195,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		51509EA643B48264CCE47722 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TTITransition/Pods-TTITransition-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TTITransition/Pods-TTITransition-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		94630CDFDB8124691C419FE1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -241,6 +225,7 @@
 				782FDA0320762246006A3C0C /* DetailsViewController.swift in Sources */,
 				782FDA1D20764F22006A3C0C /* NewsTableViewCell.swift in Sources */,
 				782FDA1820764CC3006A3C0C /* NewsItem.swift in Sources */,
+				784B77F120778A8E00A719AA /* NewsSelector.swift in Sources */,
 				782FDA0120762246006A3C0C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -383,13 +368,16 @@
 		};
 		782FDA102076224A006A3C0C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DA121FA4CE31DA595EA5ACE3 /* Pods-TTITransition.debug.xcconfig */;
+			baseConfigurationReference = 36E0A906991FE244D48AE060 /* Pods-TTITransition.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 53BMYEMLU9;
 				INFOPLIST_FILE = TTITransition/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = Andre.Kuts.TTITransition;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -399,13 +387,16 @@
 		};
 		782FDA112076224A006A3C0C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8934A11A297C5CC875581F9A /* Pods-TTITransition.release.xcconfig */;
+			baseConfigurationReference = B43149E123715C295E42AEE1 /* Pods-TTITransition.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 53BMYEMLU9;
 				INFOPLIST_FILE = TTITransition/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = Andre.Kuts.TTITransition;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

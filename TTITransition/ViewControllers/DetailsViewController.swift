@@ -18,13 +18,8 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard news != nil else { return }
-        if let img = news?.image {
-            newsDetailsImage.image = img
-        }
-        if let txt = news?.text {
-            newsDetailsText.text = txt
-        }
+        guard news != nil, let img = news?.image, let txt = news?.text else { return }
+        newsDetailsImage.image = img
+        newsDetailsText.text = txt
     }
-
 }

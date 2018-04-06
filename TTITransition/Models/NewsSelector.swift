@@ -1,5 +1,5 @@
 //
-//  LoadRequest.swift
+//  NewsSelector.swift
 //  TTITransition
 //
 //  Created by 1 on 06.04.2018.
@@ -8,9 +8,6 @@
 
 import Foundation
 
-class LoadRequest {
-    
-    func loadNewsItems() {
-    }
+enum NewsSelection {
+    case New, Top, Best
 }
-
