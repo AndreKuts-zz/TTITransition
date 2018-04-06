@@ -11,7 +11,12 @@ import UIKit
 class NewsTableViewController: UITableViewController {
 
     @IBOutlet weak var newsTypeSelector: UISegmentedControl!
-    private var path = 0
+    private var indexSelectedCell = 0
+    private var like = false {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
     private var allNews = [NewsItem(image: UIImage(named: "010-worldwide")!, text: "aasd asd asd as das dadfgsdf gsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgdsfg sdfg sdfg"),
                    NewsItem(image: UIImage(named: "021-camera")!, text: "Sasd asdsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg asd ads asdasdafadh ads fasdfffasd asdf"),
                    NewsItem(image: UIImage(named: "038-radio")!, text: "asdfasdgd sd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg agdsdfhjvksdmrg asdf")
@@ -65,15 +70,32 @@ class NewsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        path = indexPath.row
+        indexSelectedCell = indexPath.row
         self.performSegue(withIdentifier: "showDetails", sender: self)
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        let cell = self.tableView.cellForRow(at: indexPath)
+        if like {
+            cell?.backgroundColor = .gray
+            like = false
+        } else {
+            cell?.backgroundColor = UIColor(red:0.95, green:0.98, blue:0.98, alpha:1.0)
+            like = true
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Like"
     }
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetails" {
             let destVC = segue.destination as! DetailsViewController
-            destVC.news = allNews[path]
+            destVC.news = allNews[indexSelectedCell]
+            
         }
     }
 }

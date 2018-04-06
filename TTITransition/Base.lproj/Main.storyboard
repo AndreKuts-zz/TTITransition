@@ -50,7 +50,7 @@
                                         <constraint firstItem="6mg-qZ-mgE" firstAttribute="leading" secondItem="rbL-gz-59G" secondAttribute="leadingMargin" id="wAB-3K-egw"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.89794141049999998" green="0.89809560779999997" blue="0.89793163539999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.94616381918364501" green="0.97724725727366835" blue="0.97789102157360408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="iconNews" destination="6mg-qZ-mgE" id="tdb-T2-eEx"/>
                                     <outlet property="textNews" destination="n4U-gL-YgN" id="leK-72-uZm"/>
@@ -116,7 +116,7 @@
                                 <rect key="frame" x="0.0" y="72" width="320" height="44"/>
                             </navigationBar>
                         </subviews>
-                        <color key="backgroundColor" red="0.89794141049999998" green="0.89809560779999997" blue="0.89793163539999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.94509803921568625" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="rWd-rF-mp9" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="lKc-df-YCK" secondAttribute="bottom" constant="20" id="86l-Rm-kco"/>
                             <constraint firstItem="Rnd-47-OQC" firstAttribute="leading" secondItem="72y-dZ-BWO" secondAttribute="leading" id="9Lz-9K-uF8"/>

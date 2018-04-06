@@ -10,14 +10,13 @@ import UIKit
 
 class DetailsViewController: UIViewController {
 
-    var news: NewsItem? 
+    var news: NewsItem?
     @IBOutlet weak var backgoundViewForNews: UIView!
     @IBOutlet weak var newsDetailsImage: UIImageView!
     @IBOutlet weak var newsDetailsText: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         backgoundViewForNews.clipsToBounds = true
         backgoundViewForNews.layer.cornerRadius = 10
         newsDetailsText.clipsToBounds = true
