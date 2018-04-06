@@ -20,8 +20,8 @@ class DetailsViewController: UIViewController {
         
         newsDetailsText.clipsToBounds = true
         newsDetailsText.layer.cornerRadius = 10
-        guard news != nil, let img = news?.image, let txt = news?.text else { return }
-        newsDetailsImage.image = img
-        newsDetailsText.text = txt
+        guard let news = news else { return }
+        newsDetailsImage.image = news.image
+        newsDetailsText.text = news.text
     }
 }
