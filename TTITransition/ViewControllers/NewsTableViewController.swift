@@ -8,10 +8,10 @@
 
 import UIKit
 
+weak var TableViewDelegate : UITableViewController!
 class NewsTableViewController: UITableViewController {
 
     @IBOutlet weak var newsTypeSelector: UISegmentedControl!
-    private var indexSelectedCell = 0
     
     private var allNews = [NewsItem(image: UIImage(named: "010-worldwide")!, text: "aasd asd asd as das dadfgsdf gsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgdsfg sdfg sdfg"),
                    NewsItem(image: UIImage(named: "021-camera")!, text: "Sasd asdsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg asd ads asdasdafadh ads fasdfffasd asdf"),
@@ -26,12 +26,13 @@ class NewsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        TableViewDelegate = self
     }
     
     @IBAction func segmentControl(_ sender: UISegmentedControl) {
         switch newsTypeSelector.selectedSegmentIndex {
         case 0:
-            allNews = [NewsItem(image: UIImage(named: "010-worldwide")!, text: "aasd asd asd as das dadfgsdf gsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgdsfg sdfg sdfg"),
+            allNews = [NewsItem(image: #imageLiteral(resourceName: "021-camera"), text: "aasd asd asd as das dadfgsdf gsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgdsfg sdfg sdfg"),
                         NewsItem(image: UIImage(named: "021-camera")!, text: "Sasd asdsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg asd ads asdasdafadh ads fasdfffasd asdf"),
                         NewsItem(image: UIImage(named: "038-radio")!, text: "asdfasdgd sd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg agdsdfhjvksdmrg asdf"),
                         NewsItem(image: UIImage(named: "010-worldwide")!, text: "aasd asd asd as das dadfgsdf gsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgdsfg sdfg sdfg"),
@@ -85,41 +86,28 @@ class NewsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        indexSelectedCell = indexPath.row
-        self.performSegue(withIdentifier: "showDetails", sender: self)
-    }
-    
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
-        if allNews[indexPath.row].isLiked {
-            allNews[indexPath.row].isLiked = false
-        } else {
-            allNews[indexPath.row].isLiked = true
-        }
-        self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
+        self.performSegue(withIdentifier: "showDetails", sender: indexPath)
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-    
-        var title = ""
-        if !allNews[indexPath.row].isLiked {
-            title = "Liked"
-        } else {
-            title = "Dislike"
+        
+        let color : UIColor = (allNews[indexPath.row].isLiked ? UIColor.orange : UIColor.blue)
+        let title = "" + ( !allNews[indexPath.row].isLiked ? "Liked" :  "Dislike")
+        let likeBtn = UITableViewRowAction(style: .normal, title: title) { (action, index) in
+            self.allNews[indexPath.row].isLiked = !self.allNews[indexPath.row].isLiked
+            TableViewDelegate.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
         }
-        let deleteButton = UITableViewRowAction(style: .default, title: title) { (action, indexPath) in
-            self.tableView.dataSource?.tableView!(self.tableView, commit: .insert, forRowAt: indexPath)
-            return
-        }
-        deleteButton.backgroundColor = .orange
-        return [deleteButton]
+        likeBtn.backgroundColor = color
+        
+        return [likeBtn]
     }
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetails" {
+        if segue.identifier == "showDetails" ,
+            let index = sender as? IndexPath {
             let destVC = segue.destination as! DetailsViewController
-            destVC.news = allNews[indexSelectedCell]
+            destVC.news = allNews[index.row]
         }
     }
 }
