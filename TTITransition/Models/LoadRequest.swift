@@ -11,6 +11,7 @@ import Foundation
 class LoadRequest {
     
     func loadNewsItems() {
+        
     }
 }
 

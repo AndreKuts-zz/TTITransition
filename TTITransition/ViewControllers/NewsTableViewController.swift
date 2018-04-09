@@ -8,7 +8,6 @@
 
 import UIKit
 
-weak var tableViewDelegate : UITableViewController!
 
 class NewsTableViewController: UITableViewController {
 
@@ -27,7 +26,6 @@ class NewsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableViewDelegate = self
     }
     
     @IBAction func segmentControl(_ sender: UISegmentedControl) {
@@ -75,15 +73,15 @@ class NewsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NewsTableViewCell.reuseIdentifier, for: indexPath) as? NewsTableViewCell
-        cell?.iconNews.image = allNews[indexPath.row].image
-        cell?.textNews.text = allNews[indexPath.row].text
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsTableViewCell.reuseIdentifier, for: indexPath) as? NewsTableViewCell else { return UITableViewCell () }
+        cell.iconNews.image = allNews[indexPath.row].image
+        cell.textNews.text = allNews[indexPath.row].text
         if allNews[indexPath.row].isLiked {
-            cell?.backgroundColor = .gray
+            cell.backgroundColor = .gray
         } else {
-            cell?.backgroundColor = UIColor(red:0.95, green:0.98, blue:0.98, alpha:1.0)
+            cell.backgroundColor = UIColor(red:0.95, green:0.98, blue:0.98, alpha:1.0)
         }
-        return cell!
+        return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -94,9 +92,11 @@ class NewsTableViewController: UITableViewController {
         
         let title = "" + ( !allNews[indexPath.row].isLiked ? "Liked" :  "Dislike")
         let likeBtn = UITableViewRowAction(style: .normal, title: title) { [weak self] (action, index) in
-            self?.allNews[indexPath.row].isLiked = !(self?.allNews[indexPath.row].isLiked)!
-            self?.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
+            guard let storngSelf = self else { return }
+            storngSelf.allNews[indexPath.row].isLiked = !storngSelf.allNews[indexPath.row].isLiked
+            storngSelf.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
         }
+        
         let color : UIColor = (allNews[indexPath.row].isLiked ? UIColor.orange : UIColor.blue)
         likeBtn.backgroundColor = color
         return [likeBtn]
