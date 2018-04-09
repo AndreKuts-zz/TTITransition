@@ -10,7 +10,7 @@ import UIKit
 
 class DetailsViewController: UIViewController {
 
-    var news: NewsItem?
+    var news: TmpNewsItem?
     @IBOutlet weak var backgoundViewForNews: UIView!
     @IBOutlet weak var newsDetailsImage: UIImageView!
     @IBOutlet weak var newsDetailsText: UILabel!

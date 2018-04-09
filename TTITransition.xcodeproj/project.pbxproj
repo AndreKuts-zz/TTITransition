@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7823ACAE2077539300985A41 /* LoadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7823ACAD2077539300985A41 /* LoadRequest.swift */; };
+		7823ACAE2077539300985A41 /* NewsLoadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7823ACAD2077539300985A41 /* NewsLoadService.swift */; };
 		782FDA0120762246006A3C0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782FDA0020762246006A3C0C /* AppDelegate.swift */; };
 		782FDA0320762246006A3C0C /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782FDA0220762246006A3C0C /* DetailsViewController.swift */; };
 		782FDA0620762246006A3C0C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 782FDA0420762246006A3C0C /* Main.storyboard */; };
@@ -20,7 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7823ACAD2077539300985A41 /* LoadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadRequest.swift; sourceTree = "<group>"; };
+		7823ACAD2077539300985A41 /* NewsLoadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsLoadService.swift; sourceTree = "<group>"; };
 		782FD9FD20762246006A3C0C /* TTITransition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TTITransition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		782FDA0020762246006A3C0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		782FDA0220762246006A3C0C /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
@@ -88,7 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				782FDA1720764CC3006A3C0C /* NewsItem.swift */,
-				7823ACAD2077539300985A41 /* LoadRequest.swift */,
+				7823ACAD2077539300985A41 /* NewsLoadService.swift */,
 				784B77F020778A8E00A719AA /* NewsSelector.swift */,
 			);
 			path = Models;
@@ -175,7 +175,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				782FDA1B20764F07006A3C0C /* NewsTableViewController.swift in Sources */,
-				7823ACAE2077539300985A41 /* LoadRequest.swift in Sources */,
+				7823ACAE2077539300985A41 /* NewsLoadService.swift in Sources */,
 				782FDA0320762246006A3C0C /* DetailsViewController.swift in Sources */,
 				782FDA1D20764F22006A3C0C /* NewsTableViewCell.swift in Sources */,
 				782FDA1820764CC3006A3C0C /* NewsItem.swift in Sources */,
@@ -327,7 +327,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 53BMYEMLU9;
 				INFOPLIST_FILE = TTITransition/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = Andre.Kuts.TTITransition;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -342,7 +345,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 53BMYEMLU9;
 				INFOPLIST_FILE = TTITransition/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = Andre.Kuts.TTITransition;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
