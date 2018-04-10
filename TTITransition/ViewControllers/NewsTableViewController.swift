@@ -24,6 +24,7 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
                 self.tableView.reloadData()
                 self.switchLoadIndicator()
             }
+            
         }
     }
     
