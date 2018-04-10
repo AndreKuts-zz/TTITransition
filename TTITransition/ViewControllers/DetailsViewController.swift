@@ -10,7 +10,7 @@ import UIKit
 
 class DetailsViewController: UIViewController {
 
-    var news: TmpNewsItem?
+    var news: NewsItem?
     @IBOutlet weak var backgoundViewForNews: UIView!
     @IBOutlet weak var newsDetailsImage: UIImageView!
     @IBOutlet weak var newsDetailsText: UILabel!
@@ -22,7 +22,7 @@ class DetailsViewController: UIViewController {
         newsDetailsText.clipsToBounds = true
         newsDetailsText.layer.cornerRadius = 10
         guard let news = news else { return }
-        newsDetailsImage.image = news.image
-        newsDetailsText.text = news.text
+//        newsDetailsImage.image = news.image
+        newsDetailsText.text = news.title
     }
 }

@@ -9,97 +9,92 @@
 import UIKit
 
 
-class NewsTableViewController: UITableViewController {
+class NewsTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var newsTypeSelector: UISegmentedControl!
+    @IBOutlet weak var tableView: UITableView!
     
-    private var allNews = [TmpNewsItem(image: UIImage(named: "010-worldwide")!, text: "aasd asd asd as das dadfgsdf gsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgdsfg sdfg sdfg"),
-                   TmpNewsItem(image: UIImage(named: "021-camera")!, text: "Sasd asdsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg asd ads asdasdafadh ads fasdfffasd asdf"),
-                   TmpNewsItem(image: UIImage(named: "038-radio")!, text: "asdfasdgd sd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg agdsdfhjvksdmrg asdf")
-    ]
-    
-    private var updateSegment: NewsSelection = .new {
+    private var activityIndic = UIActivityIndicatorView()
+    private let utilityQueue = DispatchQueue.global(qos: .utility)
+    private let main = DispatchQueue.main
+    private var newsService: NewsAPIServiceProtocol!
+    private var allNews: [NewsItem] = [] {
         didSet {
-            self.tableView.reloadData()
+            main.async {
+                self.tableView.reloadData()
+                self.switchLoadIndicator()
+            }
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addActivityIndicator()
+    
+        newsService = NewsAPIService(delegate: self)
+        
+        self.tableView.estimatedRowHeight = 70
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        
+        utilityQueue.async { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.allNews = strongSelf.newsService.loadNewsItems(for: .top)
+        }
+    }
+    
+    // MARK: ActivityIndicator
+    func addActivityIndicator() {
+        main.async {
+            self.activityIndic = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+            self.activityIndic.stopAnimating()
+            self.activityIndic.center = self.view.center
+            self.view.addSubview(self.activityIndic)
+        }
+    }
+    
+    func switchLoadIndicator() {
+        main.async {
+            self.activityIndic.isAnimating ? self.activityIndic.stopAnimating() : self.activityIndic.startAnimating()
+        }
     }
     
     @IBAction func segmentControl(_ sender: UISegmentedControl) {
+        newsService.cancelCurrentDownloading()
+        self.switchLoadIndicator()
+        self.activityIndic.startAnimating()
         switch newsTypeSelector.selectedSegmentIndex {
         case 0:
-            allNews = [TmpNewsItem(image: #imageLiteral(resourceName: "021-camera"), text: "aasd asd asd as das dadfgsdf gsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgdsfg sdfg sdfg"),
-                        TmpNewsItem(image: UIImage(named: "021-camera")!, text: "Sasd asdsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg asd ads asdasdafadh ads fasdfffasd asdf"),
-                        TmpNewsItem(image: UIImage(named: "038-radio")!, text: "asdfasdgd sd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg agdsdfhjvksdmrg asdf"),
-                        TmpNewsItem(image: UIImage(named: "010-worldwide")!, text: "aasd asd asd as das dadfgsdf gsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgdsfg sdfg sdfg"),
-                        TmpNewsItem(image: UIImage(named: "021-camera")!, text: "Sasd asdsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg asd ads asdasdafadh ads fasdfffasd asdf"),
-                        TmpNewsItem(image: UIImage(named: "038-radio")!, text: "asdfasdgd sd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg agdsdfhjvksdmrg asdf"),
-                        TmpNewsItem(image: UIImage(named: "010-worldwide")!, text: "aasd asd asd as das dadfgsdf gsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgdsfg sdfg sdfg"),
-                        TmpNewsItem(image: UIImage(named: "021-camera")!, text: "Sasd asdsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg asd ads asdasdafadh ads fasdfffasd asdf"),
-                        TmpNewsItem(image: UIImage(named: "038-radio")!, text: "asdfasdgd sd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg agdsdfhjvksdmrg asdf"),
-                        TmpNewsItem(image: UIImage(named: "010-worldwide")!, text: "aasd asd asd as das dadfgsdf gsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgdsfg sdfg sdfg"),
-                        TmpNewsItem(image: UIImage(named: "021-camera")!, text: "Sasd asdsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg asd ads asdasdafadh ads fasdfffasd asdf"),
-                        TmpNewsItem(image: UIImage(named: "038-radio")!, text: "asdfasdgd sd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg agdsdfhjvksdmrg asdf"),
-                        TmpNewsItem(image: UIImage(named: "038-radio")!, text: "asdfasdgd sd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg agdsdfhjvksdmrg asdf"),
-                        TmpNewsItem(image: UIImage(named: "010-worldwide")!, text: "aasd asd asd as das dadfgsdf gsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgdsfg sdfg sdfg"),
-                        TmpNewsItem(image: UIImage(named: "021-camera")!, text: "Sasd asdsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg asd ads asdasdafadh ads fasdfffasd asdf"),
-                        TmpNewsItem(image: UIImage(named: "038-radio")!, text: "asdfasdgd sd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg agdsdfhjvksdmrg asdf"),
-                        TmpNewsItem(image: UIImage(named: "010-worldwide")!, text: "aasd asd asd as das dadfgsdf gsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgdsfg sdfg sdfg"),
-                        TmpNewsItem(image: UIImage(named: "021-camera")!, text: "Sasd asdsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg asd ads asdasdafadh ads fasdfffasd asdf"),
-                        TmpNewsItem(image: UIImage(named: "038-radio")!, text: "asdfasdgd sd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg agdsdfhjvksdmrg asdf")
-            ]
-            updateSegment = .new
+            utilityQueue.async { [weak self] in
+                guard let strongSelf = self else { return }
+                strongSelf.allNews = strongSelf.newsService.loadNewsItems(for: .new)
+            }
         case 1:
-        allNews = [TmpNewsItem(image: UIImage(named: "040-headphones")!, text: "aasd asd asd as das dadfgsdf gsd asddasdadfgsdf gdsfgsd asd as das dadfgsdf gdsfgdsfg sdfg sdfg"),
-                    TmpNewsItem(image: UIImage(named: "012-computer")!, text: "Sasd asdsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg asd ads asdasdafadh ads fasdfffasd asdf"),
-                    TmpNewsItem(image: UIImage(named: "029-video-camera")!, text: "asdfasdgd sd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg agdsdfhjvksdmrg asdf")]
-            updateSegment = .top
+            utilityQueue.async { [weak self] in
+                guard let strongSelf = self else { return }
+                strongSelf.allNews = strongSelf.newsService.loadNewsItems(for: .top)
+            }
         case 2:
-        allNews = [TmpNewsItem(image: UIImage(named: "007-van")!, text: "aasd asd asd as das dadfgsdf gsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgdsfg sdfg sdfg"),
-                    TmpNewsItem(image: UIImage(named: "005-news-1")!, text: "Sasd asdsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg asd ads asdasdafadh ads fasdfffasd asdf"),
-                    TmpNewsItem(image: UIImage(named: "016-sand-clock")!, text: "asdfasdgd sd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfgsd asd as das dadfgsdf gdsfg agdsdfhjvksdmrg asdf")
-            ]
-            updateSegment = .best
+            utilityQueue.async { [weak self] in
+                guard let strongSelf = self else { return }
+                strongSelf.allNews = strongSelf.newsService.loadNewsItems(for: .best)
+            }
         default: break
         }
     }
 
     // MARK: - Table view data source
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return allNews.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsTableViewCell.reuseIdentifier, for: indexPath) as? NewsTableViewCell else { return UITableViewCell () }
-        cell.iconNews.image = allNews[indexPath.row].image
-        cell.textNews.text = allNews[indexPath.row].text
-        if allNews[indexPath.row].isLiked {
-            cell.backgroundColor = .gray
-        } else {
-            cell.backgroundColor = UIColor(red:0.95, green:0.98, blue:0.98, alpha:1.0)
-        }
+        cell.textNews.text = allNews[indexPath.row].title
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "showDetails", sender: indexPath)
-    }
-    
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
-        let title = "" + ( allNews[indexPath.row].isLiked ? "Dislike" : "Liked")
-        let likeBtn = UITableViewRowAction(style: .normal, title: title) { [weak self] (action, index) in
-            guard let storngSelf = self else { return }
-            storngSelf.allNews[indexPath.row].isLiked = !storngSelf.allNews[indexPath.row].isLiked
-            storngSelf.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
-        }
-        
-        let color : UIColor = (allNews[indexPath.row].isLiked ? UIColor.orange : UIColor.blue)
-        likeBtn.backgroundColor = color
-        return [likeBtn]
     }
     
     // MARK: - Navigation
@@ -108,6 +103,17 @@ class NewsTableViewController: UITableViewController {
             let index = sender as? IndexPath {
             let destVC = segue.destination as? DetailsViewController
             destVC?.news = allNews[index.row]
+        }
+    }
+
+}
+
+//MARK: - News Service Delegate TableViewController
+extension NewsTableViewController : NewsServiceDelegate  {
+    func didNewsItemsArrived(_ service: NewsAPIService, news: [NewsItem]) {
+        self.allNews = news
+        main.async {
+            self.tableView.reloadData()
         }
     }
 }
