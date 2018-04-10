@@ -24,14 +24,13 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
                 self.tableView.reloadData()
                 self.switchLoadIndicator()
             }
-            
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addActivityIndicator()
-    
+
         newsService = NewsAPIService(delegate: self)
         
         self.tableView.estimatedRowHeight = 70

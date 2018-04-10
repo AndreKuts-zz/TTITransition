@@ -41,7 +41,6 @@ class NewsAPIService : NewsAPIServiceProtocol {
         case .best: getIdsURL = "\(baseUrl)\(bestNews)"
         case .new: getIdsURL = "\(baseUrl)\(newNews)"
         case .top: getIdsURL = "\(baseUrl)\(topNews)"
-//        default: break
         }
         guard let url = URL(string: getIdsURL) else { return result }
         let retrieveIdsTask = session.dataTask(with: url) {[weak self] (data, response, error) in
