@@ -1,0 +1,19 @@
+//
+//  NewsList.swift
+//  TTITransition
+//
+//  Created by 1 on 09.04.2018.
+//  Copyright © 2018 ANDRE.CORP. All rights reserved.
+//
+
+import Foundation
+
+class NewsList: Codable {
+    
+    var list: [Int]
+    
+    required init(from decoder: Decoder) throws {
+        let value = try decoder.singleValueContainer()
+        self.list = try value.decode([Int].self)
+    }
+}
