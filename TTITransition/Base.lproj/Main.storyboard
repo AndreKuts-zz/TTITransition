@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,8 +22,8 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ovu-R8-YDb">
                                 <rect key="frame" x="0.0" y="116" width="414" height="620"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <activityIndicatorView key="tableFooterView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" id="IJG-w5-zxH">
-                                    <rect key="frame" x="0.0" y="108" width="414" height="37"/>
+                                <activityIndicatorView key="tableFooterView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="IJG-w5-zxH">
+                                    <rect key="frame" x="0.0" y="108" width="414" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </activityIndicatorView>
                                 <prototypes>
@@ -33,30 +34,27 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="79.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Fot-9T-c6A">
-                                                    <rect key="frame" x="5" y="5" width="404" height="69.666666666666671"/>
-                                                    <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="028-magazine" translatesAutoresizingMaskIntoConstraints="NO" id="TtP-4f-See">
-                                                            <rect key="frame" x="0.0" y="0.0" width="70" height="69.666666666666671"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" priority="999" constant="70" id="4u2-tI-3zr"/>
-                                                                <constraint firstAttribute="width" constant="70" id="Eqj-Oc-xRz"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Du8-EE-kDy">
-                                                            <rect key="frame" x="70" y="24.666666666666671" width="334" height="20.333333333333329"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </stackView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="028-magazine" translatesAutoresizingMaskIntoConstraints="NO" id="TtP-4f-See">
+                                                    <rect key="frame" x="20" y="5" width="70" height="70"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" priority="999" constant="70" id="4u2-tI-3zr"/>
+                                                        <constraint firstAttribute="width" constant="70" id="Eqj-Oc-xRz"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Du8-EE-kDy">
+                                                    <rect key="frame" x="98" y="29" width="276" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Fot-9T-c6A" firstAttribute="top" secondItem="w7S-Bc-Ba4" secondAttribute="top" constant="5" id="IPc-1X-1lx"/>
-                                                <constraint firstItem="Fot-9T-c6A" firstAttribute="leading" secondItem="w7S-Bc-Ba4" secondAttribute="leading" constant="5" id="egf-o0-ZOk"/>
-                                                <constraint firstAttribute="bottom" secondItem="Fot-9T-c6A" secondAttribute="bottom" constant="5" id="qmw-Tc-viY"/>
-                                                <constraint firstAttribute="trailing" secondItem="Fot-9T-c6A" secondAttribute="trailing" constant="5" id="uKJ-Uf-2iD"/>
+                                                <constraint firstItem="TtP-4f-See" firstAttribute="leading" secondItem="w7S-Bc-Ba4" secondAttribute="leadingMargin" id="5if-tX-Q3W"/>
+                                                <constraint firstItem="TtP-4f-See" firstAttribute="centerY" secondItem="w7S-Bc-Ba4" secondAttribute="centerY" id="LuC-e6-PSU"/>
+                                                <constraint firstItem="Du8-EE-kDy" firstAttribute="top" secondItem="w7S-Bc-Ba4" secondAttribute="topMargin" constant="18" id="gdh-Wo-qNj"/>
+                                                <constraint firstItem="Du8-EE-kDy" firstAttribute="centerY" secondItem="w7S-Bc-Ba4" secondAttribute="centerY" id="uBr-z2-U3A"/>
+                                                <constraint firstItem="Du8-EE-kDy" firstAttribute="leading" secondItem="TtP-4f-See" secondAttribute="trailing" constant="8" symbolic="YES" id="vwq-OE-EYj"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Du8-EE-kDy" secondAttribute="trailing" constant="20" id="yNe-vg-epF"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -97,6 +95,7 @@
                         </segmentedControl>
                     </navigationItem>
                     <connections>
+                        <outlet property="loadingNewNewsIndicator" destination="IJG-w5-zxH" id="RUk-J5-FmG"/>
                         <outlet property="newsTypeSelector" destination="0qb-M1-ndY" id="Tua-K8-DGg"/>
                         <outlet property="tableView" destination="ovu-R8-YDb" id="q0X-FK-LUo"/>
                         <segue destination="egi-g1-1zO" kind="show" identifier="showDetails" id="caD-O6-YZL"/>
@@ -104,7 +103,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3OE-sR-lKM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="294" y="160"/>
+            <point key="canvasLocation" x="292.75362318840581" y="159.78260869565219"/>
         </scene>
         <!--Selected News-->
         <scene sceneID="odB-qm-2Rk">

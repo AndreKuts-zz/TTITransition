@@ -8,36 +8,40 @@
 
 import UIKit
 
+private var firstLoad = true
 
 class NewsTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var newsTypeSelector: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var loadingNewNewsIndicator: UIActivityIndicatorView!
     
     private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     private let utilityQueue = DispatchQueue.global(qos: .utility)
     private let mainQueue = DispatchQueue.main
     
     private var newsService: NewsAPIServiceProtocol!
+    private var contentOfSize = 0
+    private var numberNewsUploaded = 0 {
+        didSet {
+            if numberNewsUploaded <= allNews.count {
+                viewIsLoading = false
+                print(numberNewsUploaded)
+            }
+        }
+    }
+    private var viewIsLoading = false
     private var allIcons: [NewsIcon] = []
     private var allNews: [NewsItem] = [] {
         didSet {
-            for i in allNews {
-                let itm = NewsIcon(from: i.url, andDelegegate: self)
-                itm.delegateUpdateIcon = self
-                allIcons.append(itm)
-            }
-
-            mainQueue.async {
-                self.tableView.reloadData()
-                self.switchLoadIndicator()
-            }
+            print(allNews.count)
+            createdIcons(fromNews: allNews)
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        loadingNewNewsIndicator.isHidden = true
         addActivityIndicator()
         newsService = NewsAPIService(delegate: self)
         self.tableView.estimatedRowHeight = 70
@@ -50,10 +54,13 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     
     // MARK: ActivityIndicator
     func addActivityIndicator() {
-        mainQueue.async {
-            self.activityIndicator.stopAnimating()
-            self.activityIndicator.center = self.view.center
-            self.view.addSubview(self.activityIndicator)
+        if firstLoad {
+            mainQueue.async {
+                self.activityIndicator.startAnimating()
+                self.activityIndicator.center = self.view.center
+                self.view.addSubview(self.activityIndicator)
+            }
+            firstLoad = false
         }
     }
     
@@ -65,12 +72,20 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     
     
     func createdIcons(fromNews: [NewsItem]) {
-        
+        for i in allNews {
+            let itm = NewsIcon(from: i.url, andDelegegate: self)
+            itm.delegateUpdateIcon = self
+            allIcons.append(itm)
+        }
+        mainQueue.async {
+            if !self.allNews.isEmpty {
+                self.activityIndicator.stopAnimating()
+            }
+            self.tableView.reloadData()
+        }
     }
     @IBAction func segmentControl(_ sender: UISegmentedControl) {
         newsService.cancelCurrentDownloading()
-        self.switchLoadIndicator()
-        self.activityIndicator.startAnimating()
         allIcons = []
         switch newsTypeSelector.selectedSegmentIndex {
         case 0:
@@ -117,6 +132,21 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
         self.performSegue(withIdentifier: "showDetails", sender: indexPath)
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        contentOfSize = Int(scrollView.contentOffset.y + view.frame.height + 20)
+        if contentOfSize > Int(scrollView.contentSize.height) {
+            if !viewIsLoading {
+                mainQueue.asyncAfter(deadline: .now() + 5, execute: {
+                    self.loadingNewNewsIndicator.startAnimating()
+                    self.loadingNewNewsIndicator.isHidden = false
+                    self.numberNewsUploaded += 20
+                    self.tableView.reloadData()
+                    print(self.contentOfSize)
+                })
+            }
+        }
+    }
+    
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetails" ,
@@ -157,7 +187,6 @@ extension NewsTableViewController: NewsIconUpdateCell {
         }
     }
 }
-
 
 //MARK: - News Service Delegate TableViewController
 extension NewsTableViewController : NewsServiceDelegate  {
