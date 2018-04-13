@@ -25,16 +25,16 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     private var numberNewsUploaded = 0 {
         didSet {
             if numberNewsUploaded <= allNews.count {
-                viewIsLoading = false
+                isDataLoading = false
                 print(numberNewsUploaded)
             }
         }
     }
-    private var viewIsLoading = false
+    private var isDataLoading = false
+    private var didEndNews: Bool = false
     private var allIcons: [NewsIcon] = []
     private var allNews: [NewsItem] = [] {
         didSet {
-            print(allNews.count)
             createdIcons(fromNews: allNews)
         }
     }
@@ -134,15 +134,15 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         contentOfSize = Int(scrollView.contentOffset.y + view.frame.height + 20)
-        if contentOfSize > Int(scrollView.contentSize.height) {
-            if !viewIsLoading {
-                mainQueue.asyncAfter(deadline: .now() + 5, execute: {
+        if contentOfSize >= Int(scrollView.contentSize.height) {
+            if !isDataLoading {
+                isDataLoading = true
+                mainQueue.asyncAfter(deadline: .now() + 5) {
+                    self.numberNewsUploaded += 20
                     self.loadingNewNewsIndicator.startAnimating()
                     self.loadingNewNewsIndicator.isHidden = false
-                    self.numberNewsUploaded += 20
                     self.tableView.reloadData()
-                    print(self.contentOfSize)
-                })
+                }
             }
         }
     }

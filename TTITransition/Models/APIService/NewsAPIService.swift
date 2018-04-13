@@ -22,7 +22,6 @@ class NewsAPIService : NewsAPIServiceProtocol {
     
     required init(delegate: NewsServiceDelegate?) {
         self.delegate = delegate
-        
         self.session = URLSession.shared
     }
     
