@@ -14,6 +14,8 @@ class NewsIconService {
     
     private weak var delegate: NewsIconLoadDelegate?
     
+    private var currentTask: URLSessionDataTask?
+    
     static let serverAddressRegexPattern: String = "(?:www\\.)?(.*?)\\.(?:com|au\\.uk|co\\.in)"
     static let siteIconNames: [String] = ["touchicon.ico", "favicon.ico", "touch-icon.ico", "fav-icon.ico"]
     
@@ -21,19 +23,6 @@ class NewsIconService {
     
     required init (delegate: NewsIconLoadDelegate) {
         self.delegate = delegate
-    }
-    
-    private func returnBaseURL(forRegex: String, in text: String) -> String? {
-        do {
-            let regex = try NSRegularExpression(pattern: forRegex)
-            let results = regex.matches(in: text, range: NSRange(text.startIndex..., in: text))
-            guard let firstSomething = results.first,
-                let fullRange = Range(firstSomething.range, in: text) else { return nil }
-            return String(text[fullRange])
-        } catch let error {
-            print("invalid regex: \(error.localizedDescription)")
-            return nil
-        }
     }
     
     func allResults(from url: URL, iconSiteNames: [SiteIconName]) {
@@ -51,19 +40,36 @@ class NewsIconService {
         }
     }
     
+    func cancelCurrentRequest() {
+        self.currentTask?.cancel()
+    }
+    
+    private func returnBaseURL(forRegex: String, in text: String) -> String? {
+        do {
+            let regex = try NSRegularExpression(pattern: forRegex)
+            let results = regex.matches(in: text, range: NSRange(text.startIndex..., in: text))
+            guard let firstSomething = results.first,
+                let fullRange = Range(firstSomething.range, in: text) else { return nil }
+            return String(text[fullRange])
+        } catch let error {
+            print("invalid regex: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
     private func takeFavIcon(from strUrl: String, completion: @escaping LoadImageCompletion) {
         guard let url = URL(string: strUrl) else {
             completion(nil)
             return
         }
-        let sessionTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        self.currentTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
                 let mimeType = response?.mimeType, mimeType.hasPrefix("image") else {
                     return completion(nil)
             }
             completion(data)
         }
-        sessionTask.resume()
+        self.currentTask?.resume()
     }
 }
 

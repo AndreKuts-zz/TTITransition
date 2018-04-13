@@ -11,7 +11,6 @@ protocol NewsIconLoadDelegate: class {
     func dataIsCome(_ service: NewsIconService, imageData: Data)
 }
 
-
 protocol NewsIconUpdateCell: class {
     func dataIsCome(_ iconObject: NewsIcon, imageData: Data)
 }

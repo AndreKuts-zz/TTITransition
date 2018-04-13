@@ -14,7 +14,7 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var newsTypeSelector: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     
-    private let activityIndic = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     private let utilityQueue = DispatchQueue.global(qos: .utility)
     private let mainQueue = DispatchQueue.main
     
@@ -51,15 +51,15 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     // MARK: ActivityIndicator
     func addActivityIndicator() {
         mainQueue.async {
-            self.activityIndic.stopAnimating()
-            self.activityIndic.center = self.view.center
-            self.view.addSubview(self.activityIndic)
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.center = self.view.center
+            self.view.addSubview(self.activityIndicator)
         }
     }
     
     func switchLoadIndicator() {
         mainQueue.async {
-            self.activityIndic.isAnimating ? self.activityIndic.stopAnimating() : self.activityIndic.startAnimating()
+            self.activityIndicator.isAnimating ? self.activityIndicator.stopAnimating() : self.activityIndicator.startAnimating()
         }
     }
     
@@ -70,7 +70,7 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     @IBAction func segmentControl(_ sender: UISegmentedControl) {
         newsService.cancelCurrentDownloading()
         self.switchLoadIndicator()
-        self.activityIndic.startAnimating()
+        self.activityIndicator.startAnimating()
         allIcons = []
         switch newsTypeSelector.selectedSegmentIndex {
         case 0:
@@ -130,38 +130,33 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
 // MARK: - News Icon Service Delegate
 extension NewsTableViewController: NewsIconLoadDelegate {
     func dataIsCome(_ service: NewsIconService, imageData: Data) {
-        var cout = 0
-        for i in allIcons {
-            guard let data = i.data,
+        allIcons.enumerated().forEach { (offset, newsIcon) in
+            guard let data = newsIcon.data,
                 data == imageData,
-                cout < allIcons.count else {
-                    return
-            }
-            let index = IndexPath(row: cout, section: 0)
+                offset < allIcons.count else { return}
+            let index = IndexPath(row: offset, section: 0)
             mainQueue.async {
                 self.tableView.reloadRows(at: [index], with: .automatic)
             }
-            cout += 1
         }
     }
 }
 
 extension NewsTableViewController: NewsIconUpdateCell {
     func dataIsCome(_ iconObject: NewsIcon, imageData: Data) {
-        var cout = 0
-        for icon in allIcons {
-            if icon.data != nil {
-                guard iconObject === icon && cout < allIcons.count else { return }
-                let index = IndexPath(row: cout, section: 0)
-                mainQueue.async {
+        allIcons.enumerated().forEach { (offset, newsIcon) in
+            guard newsIcon.data != nil,
+                iconObject === newsIcon,
+                offset < allIcons.count else { return}
+            let index = IndexPath(row: offset, section: 0)
+            mainQueue.async {
+                if offset < self.allIcons.count  {
                     self.tableView.reloadRows(at: [index], with: .automatic)
                 }
             }
-            cout += 1
         }
     }
 }
-
 
 
 //MARK: - News Service Delegate TableViewController

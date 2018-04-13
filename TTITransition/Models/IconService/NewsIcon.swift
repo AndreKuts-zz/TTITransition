@@ -18,16 +18,27 @@ class NewsIcon {
     private weak var delegateLoadIcon : NewsIconLoadDelegate?
     weak var delegateUpdateIcon: NewsIconUpdateCell?
     
+    private var isCancelled: Bool = false
+    
     required init (from url: URL?, andDelegegate delegate: NewsIconLoadDelegate?) {
         guard let url = url else { return }
         self.newsIconService = NewsIconService(delegate: self)
         self.delegateLoadIcon = delegate
         self.newsIconService?.allResults(from: url, iconSiteNames: SiteIconName.allValues)
     }
+    
+    deinit {
+        isCancelled = true
+        self.newsIconService?.cancelCurrentRequest()
+    }
 }
 
 extension NewsIcon: NewsIconLoadDelegate {
     func dataIsCome(_ service: NewsIconService, imageData: Data) {
+        guard !isCancelled else {
+            return
+        }
+        
         self.data = imageData
         delegateUpdateIcon?.dataIsCome(self, imageData: imageData)
     }
