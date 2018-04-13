@@ -8,13 +8,6 @@
 
 import Foundation
 
-protocol NewsAPIServiceProtocol : class {
-    init(delegate: NewsServiceDelegate?)
-
-    func loadNewsItems(for type: NewsSelection) -> [NewsItem]
-    func cancelCurrentDownloading()
-}
-
 class NewsAPIService : NewsAPIServiceProtocol {
     private weak var delegate: NewsServiceDelegate?
     
@@ -61,11 +54,11 @@ class NewsAPIService : NewsAPIServiceProtocol {
     private func makeNewsItem(array news: NewsList) -> [NewsItem] {
         let dispathGroup = DispatchGroup()
         var result: [NewsItem] = []
-        for i in news.list {
+        for id in news.list {
             dispathGroup.enter()
             utilityQueue.async { [weak self] in
                 guard let strongSelf = self else { return }
-                let urlStr = "\(strongSelf.baseUrl)/v0/item/\(i).json"
+                let urlStr = "\(strongSelf.baseUrl)/v0/item/\(id).json"
                 guard let url = URL(string: urlStr) else { return }
                 let session = URLSession.shared.dataTask(with: url) { (data, responce, error) in
                     guard let data = data else { return }
