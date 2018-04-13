@@ -130,36 +130,34 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
 // MARK: - News Icon Service Delegate
 extension NewsTableViewController: NewsIconLoadDelegate {
     func dataIsCome(_ service: NewsIconService, imageData: Data) {
-        var index = -1
+        var cout = 0
         for i in allIcons {
-            index += 1
-            if let data = i.data {
-                if data == imageData {
-                    if index > allIcons.count {
-                        return
-                    }
-                    let index = IndexPath(row: index, section: 0)
-                    mainQueue.async {
-                        self.tableView.reloadRows(at: [index], with: .automatic)
-                    }
-                }
+            guard let data = i.data,
+                data == imageData,
+                cout < allIcons.count else {
+                    return
             }
+            let index = IndexPath(row: cout, section: 0)
+            mainQueue.async {
+                self.tableView.reloadRows(at: [index], with: .automatic)
+            }
+            cout += 1
         }
     }
 }
 
 extension NewsTableViewController: NewsIconUpdateCell {
     func dataIsCome(_ iconObject: NewsIcon, imageData: Data) {
-        var index = -1
+        var cout = 0
         for icon in allIcons {
-            index += 1
             if icon.data != nil {
-                guard iconObject === icon && index < allIcons.count else { return }
-                let index = IndexPath(row: index, section: 0)
+                guard iconObject === icon && cout < allIcons.count else { return }
+                let index = IndexPath(row: cout, section: 0)
                 mainQueue.async {
                     self.tableView.reloadRows(at: [index], with: .automatic)
                 }
             }
+            cout += 1
         }
     }
 }
