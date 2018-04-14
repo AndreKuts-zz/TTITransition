@@ -9,7 +9,8 @@
 protocol NewsAPIServiceProtocol : class {
     init(delegate: NewsServiceDelegate?)
     
-    func loadNewsItems(for type: NewsSelection) -> [NewsItem]
+    func loadNewsItems(for type: NewsSelection, howMuchMore
+: Int) -> [NewsItem]
     func cancelCurrentDownloading()
 }
 
