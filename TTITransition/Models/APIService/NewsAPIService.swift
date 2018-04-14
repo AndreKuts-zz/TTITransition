@@ -42,16 +42,12 @@ class NewsAPIService : NewsAPIServiceProtocol {
         let retrieveIdsTask = session.dataTask(with: url) {[weak self] (data, response, error) in
             guard let data = data else { return }
             guard let list = try? JSONDecoder().decode(NewsList.self, from: data) else { return }
-            guard let storngSelf = self else { return }
-            
-            guard list.list.count > howMuchMore else { return }
+            guard let storngSelf = self, list.list.count > howMuchMore else { return }
             if howMuchMore < storngSelf.howManyIsLoaded {
                 storngSelf.howManyIsLoaded = 0
             }
-            let newList = Array(list.list[storngSelf.howManyIsLoaded..<howMuchMore
-                ])
+            let newList = Array(list.list[storngSelf.howManyIsLoaded..<howMuchMore])
             storngSelf.howManyIsLoaded = howMuchMore
-            
             result = storngSelf.makeNewsItem(arrayFrom: newList, rightAmount: howMuchMore
             )
         }
@@ -69,12 +65,8 @@ class NewsAPIService : NewsAPIServiceProtocol {
         var result: [NewsItem] = []
         newsID.forEach { id in
             dispathGroup.enter()
-            utilityQueue.async { [weak self] in
-                guard let strongSelf = self else {
-                    dispathGroup.leave()
-                    return
-                }
-                let urlStr = "\(strongSelf.baseUrl)/v0/item/\(id).json"
+            let urlStr = "\(self.baseUrl)/v0/item/\(id).json"
+            utilityQueue.async {
                 guard let url = URL(string: urlStr) else {
                     dispathGroup.leave()
                     return

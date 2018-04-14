@@ -21,37 +21,39 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     private let mainQueue = DispatchQueue.main
     
     private var newsService: NewsAPIServiceProtocol!
-    private var contentOfSize = 0
-    private var numberNewsUploaded = 20 {
-        didSet {
-            isDataLoading = false
-            print(numberNewsUploaded)
-        }
-    }
-    private var isDataLoading = false {
-        didSet {
-            
-        }
-    }
+    private var contentOfSize: CGFloat = 0
+    private var isDataLoading = false
     private var didEndNews: Bool = false
     private var allIcons: [NewsIcon] = []
     private var allNews: [NewsItem] = [] {
         willSet {
-            if newValue.count == allNews.count {
+            guard newValue.count == allNews.count else { return }
                 mainQueue.async {
                     self.loadingNewNewsIndicator.isHidden = true
                 }
                 isDataLoading = false
+        }
+        didSet {
+            guard !allNews.isEmpty  else { return }
+            createdIcons(fromNews: allNews)
+            mainQueue.async {
+                self.activityIndicator.stopAnimating()
+                self.tableView.reloadData()
             }
         }
-        
+    }
+    private var newsSource: NewsSelection! {
         didSet {
-            if !allNews.isEmpty {
-                mainQueue.async {
-                    self.activityIndicator.stopAnimating()
-                }
+            utilityQueue.async { [weak self] in
+                guard let strongSelf = self else { return }
+                strongSelf.allNews = strongSelf.newsService.loadNewsItems(for: strongSelf.newsSource, howMuchMore: strongSelf.numberNewsUpload)
             }
-//            createdIcons(fromNews: allNews)
+        }
+    }
+    private var numberNewsUpload = 20 {
+        didSet {
+            isDataLoading = false
+            print(numberNewsUpload)
         }
     }
     
@@ -64,12 +66,9 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
         self.tableView.rowHeight = UITableViewAutomaticDimension
         utilityQueue.async { [weak self] in
             guard let strongSelf = self else { return }
-            strongSelf.allNews = strongSelf.newsService.loadNewsItems(for: .top, howMuchMore
-: strongSelf.numberNewsUploaded)
+            strongSelf.allNews = strongSelf.newsService.loadNewsItems(for: .top, howMuchMore: strongSelf.numberNewsUpload)
         }
     }
-    
-    
     
     // MARK: ActivityIndicator
     func addActivityIndicator() {
@@ -95,52 +94,34 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
             itm.delegateUpdateIcon = self
             allIcons.append(itm)
         }
-        mainQueue.async {
-            if !self.allNews.isEmpty {
-                self.activityIndicator.stopAnimating()
-            }
-        }
     }
     
     @IBAction func segmentControl(_ sender: UISegmentedControl) {
         newsService.cancelCurrentDownloading()
         allIcons = []
-        numberNewsUploaded = 20
+        self.numberNewsUpload = 0
+        utilityQueue.async { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.numberNewsUpload += 20
+            strongSelf.allNews = strongSelf.newsService.loadNewsItems(for: strongSelf.newsSource, howMuchMore: strongSelf.numberNewsUpload)
+            strongSelf.isDataLoading = true
+        }
         switch newsTypeSelector.selectedSegmentIndex {
-        case 0:
-            utilityQueue.async { [weak self] in
-                guard let strongSelf = self else { return }
-                strongSelf.allNews = strongSelf.newsService.loadNewsItems(for: .new, howMuchMore
-: strongSelf.numberNewsUploaded)
-            }
-        case 1:
-            utilityQueue.async { [weak self] in
-                guard let strongSelf = self else { return }
-                strongSelf.allNews = strongSelf.newsService.loadNewsItems(for: .top, howMuchMore
-: strongSelf.numberNewsUploaded)
-            }
-        case 2:
-            utilityQueue.async { [weak self] in
-                guard let strongSelf = self else { return }
-                strongSelf.allNews = strongSelf.newsService.loadNewsItems(for: .best, howMuchMore
-: strongSelf.numberNewsUploaded)
-            }
+        case 0: newsSource = .new
+        case 1: newsSource = .top
+        case 2: newsSource = .best
         default: break
         }
     }
     
     // MARK: - Table view data source
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allNews.count
-    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return allNews.count }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsTableViewCell.reuseIdentifier, for: indexPath) as? NewsTableViewCell else { return UITableViewCell () }
-        
         if !allNews.isEmpty {
             cell.textNews.text = allNews[indexPath.row].title
         }
-
         if !allIcons.isEmpty {
             if let data = allIcons[indexPath.row].data {
                 let img = UIImage(data: data)
@@ -158,8 +139,8 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        contentOfSize = Int(scrollView.contentOffset.y + view.frame.height + 50)
-        if contentOfSize >= Int(scrollView.contentSize.height) {
+        contentOfSize = scrollView.contentOffset.y + view.frame.height
+        if contentOfSize >= scrollView.contentSize.height - 50 {
             if !isDataLoading {
                 isDataLoading = true
                 guard isDataLoading else { return }
@@ -167,11 +148,10 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
                     self.loadingNewNewsIndicator.startAnimating()
                     self.loadingNewNewsIndicator.isHidden = false
                 }
-                mainQueue.asyncAfter(deadline: .now() + 2) { [weak self] in
+                mainQueue.asyncAfter(deadline: .now() + 3) { [weak self] in
                     guard let strongSelf = self else { return }
-                    strongSelf.numberNewsUploaded += 20
-                    let newNews = strongSelf.newsService.loadNewsItems(for: .top, howMuchMore
-: strongSelf.numberNewsUploaded)
+                    strongSelf.numberNewsUpload += 20
+                    let newNews = strongSelf.newsService.loadNewsItems(for: .top, howMuchMore: strongSelf.numberNewsUpload)
                     strongSelf.allNews = strongSelf.allNews + newNews
                 }
             }
@@ -194,26 +174,23 @@ extension NewsTableViewController: NewsIconLoadDelegate {
         allIcons.enumerated().forEach { (offset, newsIcon) in
             guard let data = newsIcon.data,
                 data == imageData,
-                offset < allIcons.count else { return}
-            let index = IndexPath(row: offset, section: 0)
-            mainQueue.async {
-                self.tableView.reloadRows(at: [index], with: .automatic)
-            }
+                offset < allIcons.count else { return }
+            //            let index = IndexPath(row: offset, section: 0)
+            //            mainQueue.async {
+            ////                self.tableView.reloadRows(at: [index], with: .automatic)
+            //            }
         }
     }
 }
 
+// MARK: - News Icon Update Cell
 extension NewsTableViewController: NewsIconUpdateCell {
     func dataIsCome(_ iconObject: NewsIcon, imageData: Data) {
         allIcons.enumerated().forEach { (offset, newsIcon) in
-            guard newsIcon.data != nil,
-                iconObject === newsIcon,
-                offset < allIcons.count else { return}
+            guard newsIcon.data != nil, iconObject === newsIcon, offset > allIcons.count else { return }
             let index = IndexPath(row: offset, section: 0)
             mainQueue.async {
-                if offset < self.allIcons.count  {
-                    self.tableView.reloadRows(at: [index], with: .automatic)
-                }
+                 self.tableView.reloadRows(at: [index], with: .automatic)
             }
         }
     }
