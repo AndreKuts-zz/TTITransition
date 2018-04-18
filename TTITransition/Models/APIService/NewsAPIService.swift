@@ -13,6 +13,7 @@ class NewsAPIService : NewsAPIServiceProtocol {
     
     private var session: URLSession
     private var isCancelled: Bool = false
+    private var howManyIsLoaded = 0
     
     private let utilityQueue = DispatchQueue.global(qos: .utility)
     private let topNews = "/v0/topstories.json"
@@ -22,11 +23,10 @@ class NewsAPIService : NewsAPIServiceProtocol {
     
     required init(delegate: NewsServiceDelegate?) {
         self.delegate = delegate
-        
         self.session = URLSession.shared
     }
     
-    func loadNewsItems(for type: NewsSelection) -> [NewsItem] {
+    func loadNewsItems(for type: NewsSelection, howMuchMore: Int) -> [NewsItem] {
         isCancelled = false
         var getIdsURL = baseUrl
         var result: [NewsItem] = []
@@ -36,11 +36,18 @@ class NewsAPIService : NewsAPIServiceProtocol {
         case .top: getIdsURL = "\(baseUrl)\(topNews)"
         }
         guard let url = URL(string: getIdsURL) else { return result }
+        
         let retrieveIdsTask = session.dataTask(with: url) {[weak self] (data, response, error) in
-            guard let dat = data else { return }
-            guard let list = try? JSONDecoder().decode(NewsList.self, from: dat) else { return }
-            guard let storngSelf = self else { return }
-            result = storngSelf.makeNewsItem(array: list)
+            guard let data = data else { return }
+            guard let list = try? JSONDecoder().decode(NewsList.self, from: data) else { return }
+            guard let storngSelf = self, list.list.count > howMuchMore else { return }
+            if howMuchMore <= storngSelf.howManyIsLoaded {
+                storngSelf.howManyIsLoaded = 0
+            }
+            let newList = Array(list.list[storngSelf.howManyIsLoaded..<howMuchMore])
+            storngSelf.howManyIsLoaded = howMuchMore
+            result = storngSelf.makeNewsItem(arrayFrom: newList, rightAmount: howMuchMore
+            )
         }
         retrieveIdsTask.resume()
         return result
@@ -51,17 +58,22 @@ class NewsAPIService : NewsAPIServiceProtocol {
         session.invalidateAndCancel()
     }
     
-    private func makeNewsItem(array news: NewsList) -> [NewsItem] {
+    private func makeNewsItem(arrayFrom newsID: [Int], rightAmount: Int) -> [NewsItem] {
         let dispathGroup = DispatchGroup()
         var result: [NewsItem] = []
-        for id in news.list {
+        newsID.forEach { id in
             dispathGroup.enter()
-            utilityQueue.async { [weak self] in
-                guard let strongSelf = self else { return }
-                let urlStr = "\(strongSelf.baseUrl)/v0/item/\(id).json"
-                guard let url = URL(string: urlStr) else { return }
+            let urlStr = "\(self.baseUrl)/v0/item/\(id).json"
+            utilityQueue.async {
+                guard let url = URL(string: urlStr) else {
+                    dispathGroup.leave()
+                    return
+                }
                 let session = URLSession.shared.dataTask(with: url) { (data, responce, error) in
-                    guard let data = data else { return }
+                    guard let data = data else {
+                        dispathGroup.leave()
+                        return
+                    }
                     guard let newsItem = try? JSONDecoder().decode(NewsItem.self, from: data) else {
                         dispathGroup.leave()
                         return

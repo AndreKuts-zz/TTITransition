@@ -9,7 +9,13 @@
 protocol NewsAPIServiceProtocol : class {
     init(delegate: NewsServiceDelegate?)
     
-    func loadNewsItems(for type: NewsSelection) -> [NewsItem]
+    func loadNewsItems(for type: NewsSelection, howMuchMore
+: Int) -> [NewsItem]
     func cancelCurrentDownloading()
 }
 
+extension NewsAPIServiceProtocol {
+    func loadNewsItems(for type: NewsSelection, howMuchMore: Int = 20) -> [NewsItem] {
+        return loadNewsItems(for: type, howMuchMore: howMuchMore)
+    }
+}

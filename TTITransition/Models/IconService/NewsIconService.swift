@@ -19,6 +19,8 @@ class NewsIconService {
     static let serverAddressRegexPattern: String = "(?:www\\.)?(.*?)\\.(?:com|au\\.uk|co\\.in)"
     static let siteIconNames: [String] = ["touchicon.ico", "favicon.ico", "touch-icon.ico", "fav-icon.ico"]
     
+    private let utilityQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.utility)
+    
     private let dispathGroup = DispatchGroup()
     
     required init (delegate: NewsIconLoadDelegate) {
@@ -41,7 +43,9 @@ class NewsIconService {
     }
     
     func cancelCurrentRequest() {
-        self.currentTask?.cancel()
+        utilityQueue.async {
+            self.currentTask?.cancel()
+        }
     }
     
     private func returnBaseURL(forRegex: String, in text: String) -> String? {
@@ -69,7 +73,10 @@ class NewsIconService {
             }
             completion(data)
         }
-        self.currentTask?.resume()
+        
+        utilityQueue.async {
+            self.currentTask?.resume()
+        }
     }
 }
 
