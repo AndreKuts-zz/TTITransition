@@ -14,3 +14,8 @@ protocol NewsAPIServiceProtocol : class {
     func cancelCurrentDownloading()
 }
 
+extension NewsAPIServiceProtocol {
+    func loadNewsItems(for type: NewsSelection, howMuchMore: Int = 20) -> [NewsItem] {
+        return loadNewsItems(for: type, howMuchMore: howMuchMore)
+    }
+}

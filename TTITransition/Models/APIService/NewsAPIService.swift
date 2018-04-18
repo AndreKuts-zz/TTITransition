@@ -43,7 +43,7 @@ class NewsAPIService : NewsAPIServiceProtocol {
             guard let data = data else { return }
             guard let list = try? JSONDecoder().decode(NewsList.self, from: data) else { return }
             guard let storngSelf = self, list.list.count > howMuchMore else { return }
-            if howMuchMore < storngSelf.howManyIsLoaded {
+            if howMuchMore <= storngSelf.howManyIsLoaded {
                 storngSelf.howManyIsLoaded = 0
             }
             let newList = Array(list.list[storngSelf.howManyIsLoaded..<howMuchMore])

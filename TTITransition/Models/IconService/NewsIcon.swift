@@ -20,6 +20,8 @@ class NewsIcon {
     
     private var isCancelled: Bool = false
     
+     var completion: ((_ data: Data) -> ())?
+    
     required init (from url: URL?, andDelegegate delegate: NewsIconLoadDelegate?) {
         guard let url = url else { return }
         self.newsIconService = NewsIconService(delegate: self)
@@ -39,8 +41,10 @@ extension NewsIcon: NewsIconLoadDelegate {
             return
         }
         
+        self.completion?(imageData)
+        
         self.data = imageData
-        delegateUpdateIcon?.dataIsCome(self, imageData: imageData)
+//        delegateUpdateIcon?.dataIsCome(self, imageData: imageData)
     }
 }
 

@@ -10,8 +10,13 @@ import UIKit
 
 class NewsTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var iconNews: UIImageView!
-    @IBOutlet weak var textNews: UILabel!
+    @IBOutlet weak var icon: UIImageView!
+    @IBOutlet weak var texts: UILabel!
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        icon.image = UIImage(named: "028-magazine")
+    }
 }
 
 extension UITableViewCell {
