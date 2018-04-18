@@ -8,8 +8,6 @@
 
 import UIKit
 
-private var firstLoad = true
-
 class NewsTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var newsTypeSelector: UISegmentedControl!
@@ -23,6 +21,7 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     private var newsService: NewsAPIServiceProtocol!
     private var contentOfSize: CGFloat!
     private var numberNewsUpload = 20
+    private var firstLoad = true
     private var isNotDataLoading = false
     private var handlers: [NewsIcon] = []
     private var iconsImageNews: [NewsIcon] = []
@@ -47,7 +46,7 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
         super.viewDidLoad()
         loadingNewNewsIndicator.isHidden = true
         addActivityIndicator()
-        newsService = NewsAPIService(delegate: self)
+        newsService = NewsAlamofireAPIService(standartDelegate: nil, alamofireDelegat: self)
         self.tableView.estimatedRowHeight = 70
         self.tableView.rowHeight = UITableViewAutomaticDimension
         utilityQueue.async { [weak self] in
@@ -125,6 +124,7 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
         self.performSegue(withIdentifier: "showDetails", sender: indexPath)
     }
     
+    // MARK: - Scroll in TableView
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         contentOfSize = scrollView.contentOffset.y + view.frame.height
         if contentOfSize >= scrollView.contentSize.height - 150 {
@@ -195,4 +195,15 @@ extension NewsTableViewController : NewsServiceDelegate  {
         }
     }
 }
+
+extension NewsTableViewController: NewsAlamofireServiceDelegate {
+    func didNewsItemsArrived(_ service: NewsAlamofireAPIService, news: [NewsItem]) {
+        DispatchQueue.main.async {
+           self.arrayDownloadedNews = self.arrayDownloadedNews + news
+        }
+    }
+}
+
+
+
 

@@ -7,10 +7,9 @@
 //
 
 protocol NewsAPIServiceProtocol : class {
-    init(delegate: NewsServiceDelegate?)
+    init(standartDelegate: NewsServiceDelegate?, alamofireDelegat: NewsAlamofireServiceDelegate?)
     
-    func loadNewsItems(for type: NewsSelection, howMuchMore
-: Int) -> [NewsItem]
+    func loadNewsItems(for type: NewsSelection, howMuchMore: Int) -> [NewsItem]
     func cancelCurrentDownloading()
 }
 

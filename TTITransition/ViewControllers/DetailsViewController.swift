@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class DetailsViewController: UIViewController {
 
     var news: NewsItem?

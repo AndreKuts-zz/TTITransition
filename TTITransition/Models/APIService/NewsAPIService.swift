@@ -9,6 +9,7 @@
 import Foundation
 
 class NewsAPIService : NewsAPIServiceProtocol {
+    
     private weak var delegate: NewsServiceDelegate?
     
     private var session: URLSession
@@ -21,8 +22,8 @@ class NewsAPIService : NewsAPIServiceProtocol {
     private let newNews = "/v0/newstories.json"
     private let baseUrl = "https://hacker-news.firebaseio.com"
     
-    required init(delegate: NewsServiceDelegate?) {
-        self.delegate = delegate
+    required init(standartDelegate: NewsServiceDelegate?, alamofireDelegat: NewsAlamofireServiceDelegate?) {
+        self.delegate = standartDelegate
         self.session = URLSession.shared
     }
     
@@ -34,7 +35,7 @@ class NewsAPIService : NewsAPIServiceProtocol {
         case .best: getIdsURL = "\(baseUrl)\(bestNews)"
         case .new: getIdsURL = "\(baseUrl)\(newNews)"
         case .top: getIdsURL = "\(baseUrl)\(topNews)"
-        }
+    }
         guard let url = URL(string: getIdsURL) else { return result }
         
         let retrieveIdsTask = session.dataTask(with: url) {[weak self] (data, response, error) in
@@ -46,16 +47,10 @@ class NewsAPIService : NewsAPIServiceProtocol {
             }
             let newList = Array(list.list[storngSelf.howManyIsLoaded..<howMuchMore])
             storngSelf.howManyIsLoaded = howMuchMore
-            result = storngSelf.makeNewsItem(arrayFrom: newList, rightAmount: howMuchMore
-            )
+            result = storngSelf.makeNewsItem(arrayFrom: newList, rightAmount: howMuchMore)
         }
         retrieveIdsTask.resume()
         return result
-    }
-    
-    func cancelCurrentDownloading() {
-        isCancelled = true
-        session.invalidateAndCancel()
     }
     
     private func makeNewsItem(arrayFrom newsID: [Int], rightAmount: Int) -> [NewsItem] {
@@ -90,5 +85,10 @@ class NewsAPIService : NewsAPIServiceProtocol {
             }
         }
         return result
+    }
+    
+    func cancelCurrentDownloading() {
+        isCancelled = true
+        session.invalidateAndCancel()
     }
 }
