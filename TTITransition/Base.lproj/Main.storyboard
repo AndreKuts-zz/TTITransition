@@ -38,7 +38,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Du8-EE-kDy">
-                                                    <rect key="frame" x="93" y="29" width="286" height="20"/>
+                                                    <rect key="frame" x="93" y="29" width="472" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -55,7 +55,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="icon" destination="TtP-4f-See" id="Rm4-cB-x6l"/>
-                                            <outlet property="texts" destination="Du8-EE-kDy" id="nmH-is-A19"/>
+                                            <outlet property="lbl" destination="Du8-EE-kDy" id="nmH-is-A19"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

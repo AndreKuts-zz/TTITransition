@@ -24,7 +24,7 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     private var contentOfSize: CGFloat!
     private var numberNewsUpload = 20
     private var isNotDataLoading = false
-    private var didEndNews = true
+    private var handlers: [NewsIcon] = []
     private var iconsImageNews: [NewsIcon] = []
     private var arrayDownloadedNews: [NewsItem] = [] {
         willSet {
@@ -32,6 +32,7 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
             DispatchQueue.main.async {
                 self.loadingNewNewsIndicator.stopAnimating()
                 self.loadingNewNewsIndicator.isHidden = true
+                
             }
         }
         didSet {
@@ -41,7 +42,6 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
                 var indexes: [IndexPath] = []
-//                print(self.numberNewsUpload)
                 for i in (self.numberNewsUpload - 20)..<self.numberNewsUpload {
                     let index = IndexPath(item: i, section: 0)
                     indexes.append(index)
@@ -113,18 +113,8 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsTableViewCell.reuseIdentifier, for: indexPath) as? NewsTableViewCell else { return UITableViewCell () }
         if !arrayDownloadedNews.isEmpty {
-            cell.texts.text = arrayDownloadedNews[indexPath.row].title
+            cell.lbl.text = arrayDownloadedNews[indexPath.row].title
         }
-//        if !iconsImageNews.isEmpty {
-//            if let data = iconsImageNews[indexPath.row].data {
-//                let img = UIImage(data: data)
-//                cell.iconNews.image = img
-//            } else {
-//                let img = UIImage(named: "028-magazine")
-//                cell.iconNews.image = img
-//            }
-//        }
-        
         let newsIco = NewsIcon(from: arrayDownloadedNews[indexPath.row].url, andDelegegate: nil)
         newsIco.completion = { [unowned self] imgData in
             let img = UIImage(data: imgData)
@@ -139,7 +129,7 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
         return cell
     }
     
-    var handlers: [NewsIcon] = []
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "showDetails", sender: indexPath)
     }
@@ -148,11 +138,15 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
         contentOfSize = scrollView.contentOffset.y + view.frame.height
         if contentOfSize >= scrollView.contentSize.height - 150 {
             DispatchQueue.main.async {
+                guard self.isNotDataLoading else {
+                    self.loadingNewNewsIndicator.stopAnimating()
+                    self.loadingNewNewsIndicator.isHidden = true
+                    return
+                }
                 self.loadingNewNewsIndicator.startAnimating()
                 self.loadingNewNewsIndicator.isHidden = false
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                print("Heeeeeloooooo")
+            DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
                 guard let strongSelf = self else { return }
                 if strongSelf.isNotDataLoading {
                     strongSelf.numberNewsUpload += 20
@@ -176,14 +170,14 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
 // MARK: - News Icon Service Delegate
 extension NewsTableViewController: NewsIconLoadDelegate {
     func dataIsCome(_ service: NewsIconService, imageData: Data) {
-        iconsImageNews.enumerated().forEach { (offset, newsIcon) in
-            guard let data = newsIcon.data,
-                data == imageData,
-                offset < iconsImageNews.count else { return }
-            let index = IndexPath(row: offset, section: 0)
-            DispatchQueue.main.async {
-            }
-        }
+//        iconsImageNews.enumerated().forEach { (offset, newsIcon) in
+//            guard let data = newsIcon.data,
+//                data == imageData,
+//                offset < iconsImageNews.count else { return }
+//            let index = IndexPath(row: offset, section: 0)
+//            DispatchQueue.main.async {
+//            }
+//        }
     }
 }
 
@@ -206,7 +200,6 @@ extension NewsTableViewController: NewsIconUpdateCell {
 extension NewsTableViewController : NewsServiceDelegate  {
     func didNewsItemsArrived(_ service: NewsAPIService, news: [NewsItem]) {
         DispatchQueue.main.async {
-//            self.createdIcons(fromNews: news)
             self.arrayDownloadedNews = self.arrayDownloadedNews + news
         }
     }

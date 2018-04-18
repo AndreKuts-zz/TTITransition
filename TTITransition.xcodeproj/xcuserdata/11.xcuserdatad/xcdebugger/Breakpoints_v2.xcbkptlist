@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TTITransition/ViewControllers/NewsTableViewController.swift"
-            timestampString = "545734765.921326"
+            timestampString = "545739443.522081"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
             landmarkName = "arrayDownloadedNews"
             landmarkType = "24">
          </BreakpointContent>
@@ -70,17 +70,97 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TTITransition/ViewControllers/NewsTableViewController.swift"
-            timestampString = "545734765.921401"
+            timestampString = "545739443.522481"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
             landmarkName = "arrayDownloadedNews"
             landmarkType = "24">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TTITransition.NewsTableViewController.(arrayDownloadedNews in _9B66D52EF3F7775B7C28024E6714EC8A).willset : Swift.Array&lt;TTITransition.NewsItem&gt;"
+                  moduleName = "TTITransition"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/11/Desktop/TTITransition/TTITransition/ViewControllers/NewsTableViewController.swift"
+                  timestampString = "545738839.293045"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "34"
+                  endingLineNumber = "34"
+                  offsetFromSymbolStart = "210">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in TTITransition.NewsTableViewController.(arrayDownloadedNews in _9B66D52EF3F7775B7C28024E6714EC8A).willset : Swift.Array&lt;TTITransition.NewsItem&gt;"
+                  moduleName = "TTITransition"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/11/Desktop/TTITransition/TTITransition/ViewControllers/NewsTableViewController.swift"
+                  timestampString = "545738839.295813"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "25">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TTITransition/ViewControllers/NewsTableViewController.swift"
+            timestampString = "545739443.522788"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "scrollViewDidEndDecelerating(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TTITransition/ViewControllers/NewsTableViewController.swift"
+            timestampString = "545739443.523064"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
+            landmarkName = "scrollViewDidEndDecelerating(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TTITransition/ViewControllers/NewsTableViewController.swift"
+            timestampString = "545739443.523316"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
+            landmarkName = "scrollViewDidEndDecelerating(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -11,7 +11,7 @@ import UIKit
 class NewsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var icon: UIImageView!
-    @IBOutlet weak var texts: UILabel!
+    @IBOutlet weak var lbl: UILabel!
     
     override func prepareForReuse() {
         super.prepareForReuse()

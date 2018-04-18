@@ -8,8 +8,6 @@
 
 import Foundation
 
-
-
 class NewsAPIService : NewsAPIServiceProtocol {
     private weak var delegate: NewsServiceDelegate?
     
