@@ -27,14 +27,6 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     private var handlers: [NewsIcon] = []
     private var iconsImageNews: [NewsIcon] = []
     private var arrayDownloadedNews: [NewsItem] = [] {
-        willSet {
-            guard newValue.count == arrayDownloadedNews.count else { return }
-            DispatchQueue.main.async {
-                self.loadingNewNewsIndicator.stopAnimating()
-                self.loadingNewNewsIndicator.isHidden = true
-                
-            }
-        }
         didSet {
             guard !arrayDownloadedNews.isEmpty else { return }
             createdIcons(fromNews: arrayDownloadedNews)
@@ -128,7 +120,6 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
         handlers.append(newsIco)
         return cell
     }
-    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "showDetails", sender: indexPath)
