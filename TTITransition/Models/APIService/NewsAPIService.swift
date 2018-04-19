@@ -80,9 +80,8 @@ class NewsAPIService : NewsAPIServiceProtocol {
             }
         }
         dispathGroup.notify(queue: .global()) {
-            if !self.isCancelled {
-                self.delegate?.didNewsItemsArrived(self, news: result)
-            }
+            guard !self.isCancelled else { return }
+            self.delegate?.didNewsItemsArrived(self, news: result)
         }
         return result
     }
