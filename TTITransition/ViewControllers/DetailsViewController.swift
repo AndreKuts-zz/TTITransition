@@ -9,13 +9,13 @@
 import UIKit
 
 class DetailsViewController: UIViewController {
-
-    var news: NewsItem?
+    
     @IBOutlet weak var backgoundViewForNews: UIView!
     @IBOutlet weak var newsDetailsImage: UIImageView!
     @IBOutlet weak var newsDetailsText: UILabel!
     
     var newIconService: NewsIconService!
+    var news: NewsItem?
     var iconData = Data() {
         didSet {
             DispatchQueue.main.async {

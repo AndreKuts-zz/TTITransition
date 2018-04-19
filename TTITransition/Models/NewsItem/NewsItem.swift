@@ -9,7 +9,7 @@
 import UIKit
 
 class NewsItem: Codable {
-
+    
     let by: String?
     let descendants: String?
     let id: Int?

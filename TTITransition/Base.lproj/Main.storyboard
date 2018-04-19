@@ -63,8 +63,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="q4m-OO-KTU" id="GYh-Z9-w79"/>
-                                    <outlet property="delegate" destination="q4m-OO-KTU" id="akx-jg-8HZ"/>
+                                    <outlet property="dataSource" destination="q4m-OO-KTU" id="8Wd-fX-a8B"/>
+                                    <outlet property="delegate" destination="q4m-OO-KTU" id="Luq-yh-gzZ"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -94,9 +94,9 @@
                         </segmentedControl>
                     </navigationItem>
                     <connections>
-                        <outlet property="loadingNewNewsIndicator" destination="IJG-w5-zxH" id="RUk-J5-FmG"/>
-                        <outlet property="newsTypeSelector" destination="0qb-M1-ndY" id="Tua-K8-DGg"/>
-                        <outlet property="tableView" destination="ovu-R8-YDb" id="q0X-FK-LUo"/>
+                        <outlet property="loadIndicator" destination="IJG-w5-zxH" id="u9T-yl-shr"/>
+                        <outlet property="newsTypeSelector" destination="0qb-M1-ndY" id="w18-P4-XUV"/>
+                        <outlet property="tableView" destination="ovu-R8-YDb" id="DgZ-Yv-75q"/>
                         <segue destination="egi-g1-1zO" kind="show" identifier="showDetails" id="caD-O6-YZL"/>
                     </connections>
                 </viewController>

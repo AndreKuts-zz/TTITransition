@@ -17,13 +17,12 @@ class NewsAlamofireAPIService: NewsAPIServiceProtocol{
     private let topNews = "/v0/topstories.json"
     private let bestNews = "/v0/beststories.json"
     private let newNews = "/v0/newstories.json"
-    private let utilityQueue = DispatchQueue.global(qos: .utility)
     
     private var isCancelled: Bool = false
     private var howManyIsLoaded = 0
     
-    required init(alamofireDelegat: NewsAlamofireServiceDelegate?) {
-        self.delegate = alamofireDelegat
+    required init(alamofireDelegate: NewsAlamofireServiceDelegate?) {
+        self.delegate = alamofireDelegate
     }
     
     func loadNewsItems(for type: NewsSource, howMuchMore: Int) -> [NewsItem] {
@@ -36,14 +35,15 @@ class NewsAlamofireAPIService: NewsAPIServiceProtocol{
         case .top: getIdsURL = "\(baseUrl)\(topNews)"
         }
         guard let url = URL(string: getIdsURL) else { return result }
-        Alamofire.request(url).responseJSON(completionHandler: { (response) in
-            guard let data = response.data else { return }
-            guard let list = try? JSONDecoder().decode(NewsList.self, from: data) else { return }
-            guard list.list.count > howMuchMore else { return }
+        Alamofire.request(url).responseJSON(completionHandler: { response in
+            guard let data = response.data,
+                let list = try? JSONDecoder().decode(NewsList.self, from: data),
+                list.ids.count > howMuchMore
+                else { return }
             if howMuchMore <= self.howManyIsLoaded {
                 self.howManyIsLoaded = 0
             }
-            let newList = Array(list.list[self.howManyIsLoaded..<howMuchMore])
+            let newList = Array(list.ids[self.howManyIsLoaded..<howMuchMore])
             self.howManyIsLoaded = howMuchMore
             result = self.makeNewsItem(arrayFrom: newList, rightAmount: howMuchMore)
         })
@@ -56,12 +56,12 @@ class NewsAlamofireAPIService: NewsAPIServiceProtocol{
         newsID.forEach { id in
             dispathGroup.enter()
             let urlStr = "\(self.baseUrl)/v0/item/\(id).json"
-            utilityQueue.async {
+            DispatchQueue.global(qos: .utility).async {
                 guard let url = URL(string: urlStr) else {
                     dispathGroup.leave()
                     return
                 }
-                Alamofire.request(url).responseJSON(completionHandler: { (response) in
+                Alamofire.request(url).responseJSON(completionHandler: { response in
                     guard let data = response.data else {
                         dispathGroup.leave()
                         return

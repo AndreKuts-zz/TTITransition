@@ -10,10 +10,10 @@ import Foundation
 
 class NewsList: Codable {
     
-    var list: [Int]
+    var ids: [Int]
     
     required init(from decoder: Decoder) throws {
         let value = try decoder.singleValueContainer()
-        self.list = try value.decode([Int].self)
+        self.ids = try value.decode([Int].self)
     }
 }

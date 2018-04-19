@@ -13,14 +13,14 @@ typealias LoadImageCompletion = (_ imageData: Data?) -> ()
 class NewsIconService {
     
     private weak var delegate: NewsIconLoadDelegate?
-    
+
     private var currentTask: URLSessionDataTask?
     
     static let serverAddressRegexPattern: String = "(?:www\\.)?(.*?)\\.(?:com|au\\.uk|co\\.in)"
     static let siteIconNames: [String] = ["touchicon.ico", "favicon.ico", "touch-icon.ico", "fav-icon.ico"]
     
     private let utilityQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.utility)
-    
+
     private let dispathGroup = DispatchGroup()
     
     required init (delegate: NewsIconLoadDelegate) {

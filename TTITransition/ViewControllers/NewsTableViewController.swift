@@ -12,14 +12,13 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     
     @IBOutlet weak var newsTypeSelector: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var loadingNewNewsIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var loadIndicator: UIActivityIndicatorView!
     
     private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     private let utilityQueue = DispatchQueue.global(qos: .utility)
     
     private var newsSource: NewsSource = .new
     private var newsService: NewsAPIServiceProtocol!
-    private var sizeScrollView: CGFloat!
     private var numberNewsUpload = 20
     private var firstLoad = true
     private var isNotDataLoading = false
@@ -43,9 +42,9 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadingNewNewsIndicator.isHidden = true
+        loadIndicator.isHidden = true
         addActivityIndicator()
-        newsService = NewsAlamofireAPIService(alamofireDelegat: self)
+        newsService = NewsAlamofireAPIService(alamofireDelegate: self)
         self.tableView.estimatedRowHeight = 70
         self.tableView.rowHeight = UITableViewAutomaticDimension
         utilityQueue.async { [weak self] in
@@ -125,16 +124,15 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     
     // MARK: - UITableViewDelegate
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        sizeScrollView = scrollView.contentOffset.y + view.frame.height
-        if sizeScrollView >= scrollView.contentSize.height - 150 {
+        if (scrollView.contentOffset.y + view.frame.height) >= scrollView.contentSize.height - 150 {
             DispatchQueue.main.async {
                 guard self.isNotDataLoading else {
-                    self.loadingNewNewsIndicator.stopAnimating()
-                    self.loadingNewNewsIndicator.isHidden = true
+                    self.loadIndicator.stopAnimating()
+                    self.loadIndicator.isHidden = true
                     return
                 }
-                self.loadingNewNewsIndicator.startAnimating()
-                self.loadingNewNewsIndicator.isHidden = false
+                self.loadIndicator.startAnimating()
+                self.loadIndicator.isHidden = false
             }
             DispatchQueue.main.async { [weak self] in
                 guard let strongSelf = self else { return }
@@ -190,7 +188,7 @@ extension NewsTableViewController : NewsServiceDelegate  {
 extension NewsTableViewController: NewsAlamofireServiceDelegate {
     func didNewsItemsArrived(_ service: NewsAPIServiceProtocol, news: [NewsItem]) {
         DispatchQueue.main.async {
-           self.arrayDownloadedNews = self.arrayDownloadedNews + news
+            self.arrayDownloadedNews = self.arrayDownloadedNews + news
         }
     }
 }

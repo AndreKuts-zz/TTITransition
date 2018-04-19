@@ -22,8 +22,8 @@ class NewsAPIService : NewsAPIServiceProtocol {
     private let newNews = "/v0/newstories.json"
     private let baseUrl = "https://hacker-news.firebaseio.com"
     
-    required init(alamofireDelegat: NewsAlamofireServiceDelegate?) {
-        self.delegate = alamofireDelegat
+    required init(alamofireDelegate: NewsAlamofireServiceDelegate?) {
+        self.delegate = alamofireDelegate
         self.session = URLSession.shared
     }
     
@@ -35,17 +35,17 @@ class NewsAPIService : NewsAPIServiceProtocol {
         case .best: getIdsURL = "\(baseUrl)\(bestNews)"
         case .new: getIdsURL = "\(baseUrl)\(newNews)"
         case .top: getIdsURL = "\(baseUrl)\(topNews)"
-    }
+        }
         guard let url = URL(string: getIdsURL) else { return result }
         
         let retrieveIdsTask = session.dataTask(with: url) {[weak self] (data, response, error) in
             guard let data = data else { return }
             guard let list = try? JSONDecoder().decode(NewsList.self, from: data) else { return }
-            guard let storngSelf = self, list.list.count > howMuchMore else { return }
+            guard let storngSelf = self, list.ids.count > howMuchMore else { return }
             if howMuchMore <= storngSelf.howManyIsLoaded {
                 storngSelf.howManyIsLoaded = 0
             }
-            let newList = Array(list.list[storngSelf.howManyIsLoaded..<howMuchMore])
+            let newList = Array(list.ids[storngSelf.howManyIsLoaded..<howMuchMore])
             storngSelf.howManyIsLoaded = howMuchMore
             result = storngSelf.makeNewsItem(arrayFrom: newList, rightAmount: howMuchMore)
         }
@@ -80,8 +80,9 @@ class NewsAPIService : NewsAPIServiceProtocol {
             }
         }
         dispathGroup.notify(queue: .global()) {
-            guard !self.isCancelled else { return }
-            self.delegate?.didNewsItemsArrived(self, news: result)
+            if !self.isCancelled {
+                self.delegate?.didNewsItemsArrived(self, news: result)
+            }
         }
         return result
     }

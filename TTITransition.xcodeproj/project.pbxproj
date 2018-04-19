@@ -12,7 +12,6 @@
 		7823ACAE2077539300985A41 /* NewsAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7823ACAD2077539300985A41 /* NewsAPIService.swift */; };
 		782FDA0120762246006A3C0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782FDA0020762246006A3C0C /* AppDelegate.swift */; };
 		782FDA0320762246006A3C0C /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782FDA0220762246006A3C0C /* DetailsViewController.swift */; };
-		782FDA0620762246006A3C0C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 782FDA0420762246006A3C0C /* Main.storyboard */; };
 		782FDA082076224A006A3C0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 782FDA072076224A006A3C0C /* Assets.xcassets */; };
 		782FDA0B2076224A006A3C0C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 782FDA092076224A006A3C0C /* LaunchScreen.storyboard */; };
 		782FDA1820764CC3006A3C0C /* NewsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782FDA1720764CC3006A3C0C /* NewsItem.swift */; };
@@ -21,6 +20,7 @@
 		7832B7BD207E175D00635C47 /* NewsAPIServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7832B7BC207E175D00635C47 /* NewsAPIServiceProtocol.swift */; };
 		7846AD88207E3079001B8FDB /* NewsIconeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7846AD87207E3079001B8FDB /* NewsIconeDelegate.swift */; };
 		784B77F120778A8E00A719AA /* NewsSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B77F020778A8E00A719AA /* NewsSelector.swift */; };
+		7855BA162088E8B700866BF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 782FDA0420762246006A3C0C /* Main.storyboard */; };
 		786BA88E208767030073A18B /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 786BA88D208767030073A18B /* Alamofire.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		786BA8922087748D0073A18B /* NewsAlamofireAPIDelegat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786BA8912087748D0073A18B /* NewsAlamofireAPIDelegat.swift */; };
 		786BA8932087813E0073A18B /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 786BA88D208767030073A18B /* Alamofire.framework */; };
@@ -241,7 +241,7 @@
 			files = (
 				782FDA0B2076224A006A3C0C /* LaunchScreen.storyboard in Resources */,
 				782FDA082076224A006A3C0C /* Assets.xcassets in Resources */,
-				782FDA0620762246006A3C0C /* Main.storyboard in Resources */,
+				7855BA162088E8B700866BF8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

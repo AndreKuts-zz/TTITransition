@@ -1,5 +1,5 @@
 //
-//  NewsIconUpdate.swift
+//  NewsIcon.swift
 //  TTITransition
 //
 //  Created by 1 on 12.04.2018.
@@ -8,19 +8,15 @@
 
 import Foundation
 
-
 class NewsIcon {
-    
-    var data: Data?
-    
-    private var newsIconService: NewsIconService?
     
     private weak var delegateLoadIcon : NewsIconLoadDelegate?
     weak var delegateUpdateIcon: NewsIconUpdateCell?
-    
+    private var newsIconService: NewsIconService?
     private var isCancelled: Bool = false
     
-     var completion: ((_ data: Data) -> ())?
+    var completion: ((_ data: Data) -> ())?
+    var data: Data?
     
     required init (from url: URL?, andDelegegate delegate: NewsIconLoadDelegate?) {
         guard let url = url else { return }
@@ -37,14 +33,9 @@ class NewsIcon {
 
 extension NewsIcon: NewsIconLoadDelegate {
     func dataIsCome(_ service: NewsIconService, imageData: Data) {
-        guard !isCancelled else {
-            return
-        }
-        
+        guard !isCancelled else { return }
         self.completion?(imageData)
-        
         self.data = imageData
-//        delegateUpdateIcon?.dataIsCome(self, imageData: imageData)
     }
 }
 
