@@ -8,11 +8,9 @@
 
 import UIKit
 
-
 class DetailsViewController: UIViewController {
 
     var news: NewsItem?
-    
     @IBOutlet weak var backgoundViewForNews: UIView!
     @IBOutlet weak var newsDetailsImage: UIImageView!
     @IBOutlet weak var newsDetailsText: UILabel!
@@ -29,7 +27,6 @@ class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.newIconService = NewsIconService(delegate: self)
         rectForTextView()
         guard let news = news else { return }
@@ -46,6 +43,7 @@ class DetailsViewController: UIViewController {
     }
 }
 
+// MARK: - NewsIconLoadDelegate
 extension DetailsViewController: NewsIconLoadDelegate {
     func dataIsCome(_ service: NewsIconService, imageData: Data) {
         self.iconData = imageData

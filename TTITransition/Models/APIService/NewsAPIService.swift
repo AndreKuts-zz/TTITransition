@@ -10,7 +10,7 @@ import Foundation
 
 class NewsAPIService : NewsAPIServiceProtocol {
     
-    private weak var delegate: NewsServiceDelegate?
+    private weak var delegate: NewsAlamofireServiceDelegate?
     
     private var session: URLSession
     private var isCancelled: Bool = false
@@ -22,12 +22,12 @@ class NewsAPIService : NewsAPIServiceProtocol {
     private let newNews = "/v0/newstories.json"
     private let baseUrl = "https://hacker-news.firebaseio.com"
     
-    required init(standartDelegate: NewsServiceDelegate?, alamofireDelegat: NewsAlamofireServiceDelegate?) {
-        self.delegate = standartDelegate
+    required init(alamofireDelegat: NewsAlamofireServiceDelegate?) {
+        self.delegate = alamofireDelegat
         self.session = URLSession.shared
     }
     
-    func loadNewsItems(for type: NewsSelection, howMuchMore: Int) -> [NewsItem] {
+    func loadNewsItems(for type: NewsSource, howMuchMore: Int) -> [NewsItem] {
         isCancelled = false
         var getIdsURL = baseUrl
         var result: [NewsItem] = []

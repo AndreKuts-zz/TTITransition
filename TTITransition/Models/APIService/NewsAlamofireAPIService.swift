@@ -22,13 +22,12 @@ class NewsAlamofireAPIService: NewsAPIServiceProtocol{
     private var isCancelled: Bool = false
     private var howManyIsLoaded = 0
     
-    required init(standartDelegate: NewsServiceDelegate?, alamofireDelegat: NewsAlamofireServiceDelegate?) {
+    required init(alamofireDelegat: NewsAlamofireServiceDelegate?) {
         self.delegate = alamofireDelegat
     }
     
-    func loadNewsItems(for type: NewsSelection, howMuchMore: Int) -> [NewsItem] {
+    func loadNewsItems(for type: NewsSource, howMuchMore: Int) -> [NewsItem] {
         isCancelled = false
-        
         var getIdsURL = baseUrl
         var result: [NewsItem] = []
         switch type {
@@ -77,9 +76,8 @@ class NewsAlamofireAPIService: NewsAPIServiceProtocol{
             }
         }
         dispathGroup.notify(queue: .global()) {
-            if !self.isCancelled {
-                self.delegate?.didNewsItemsArrived(self, news: result)
-            }
+            guard !self.isCancelled else { return }
+            self.delegate?.didNewsItemsArrived(self, news: result)
         }
         return result
     }
@@ -87,4 +85,3 @@ class NewsAlamofireAPIService: NewsAPIServiceProtocol{
     func cancelCurrentDownloading() {
     }
 }
-

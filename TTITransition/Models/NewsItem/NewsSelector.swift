@@ -8,6 +8,6 @@
 
 import Foundation
 
-enum NewsSelection {
+enum NewsSource {
     case new, top, best
 }

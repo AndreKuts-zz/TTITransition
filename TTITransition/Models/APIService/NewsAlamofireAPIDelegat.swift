@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 protocol NewsAlamofireServiceDelegate : class {
-    func didNewsItemsArrived(_ service: NewsAlamofireAPIService, news: [NewsItem])
+    func didNewsItemsArrived(_ service: NewsAPIServiceProtocol, news: [NewsItem])
 }
