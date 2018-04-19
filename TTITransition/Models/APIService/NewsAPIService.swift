@@ -9,7 +9,8 @@
 import Foundation
 
 class NewsAPIService : NewsAPIServiceProtocol {
-    private weak var delegate: NewsServiceDelegate?
+    
+    private weak var delegate: NewsAlamofireServiceDelegate?
     
     private var session: URLSession
     private var isCancelled: Bool = false
@@ -21,12 +22,12 @@ class NewsAPIService : NewsAPIServiceProtocol {
     private let newNews = "/v0/newstories.json"
     private let baseUrl = "https://hacker-news.firebaseio.com"
     
-    required init(delegate: NewsServiceDelegate?) {
-        self.delegate = delegate
+    required init(alamofireDelegate: NewsAlamofireServiceDelegate?) {
+        self.delegate = alamofireDelegate
         self.session = URLSession.shared
     }
     
-    func loadNewsItems(for type: NewsSelection, howMuchMore: Int) -> [NewsItem] {
+    func loadNewsItems(for type: NewsSource, howMuchMore: Int) -> [NewsItem] {
         isCancelled = false
         var getIdsURL = baseUrl
         var result: [NewsItem] = []
@@ -40,22 +41,16 @@ class NewsAPIService : NewsAPIServiceProtocol {
         let retrieveIdsTask = session.dataTask(with: url) {[weak self] (data, response, error) in
             guard let data = data else { return }
             guard let list = try? JSONDecoder().decode(NewsList.self, from: data) else { return }
-            guard let storngSelf = self, list.list.count > howMuchMore else { return }
+            guard let storngSelf = self, list.ids.count > howMuchMore else { return }
             if howMuchMore <= storngSelf.howManyIsLoaded {
                 storngSelf.howManyIsLoaded = 0
             }
-            let newList = Array(list.list[storngSelf.howManyIsLoaded..<howMuchMore])
+            let newList = Array(list.ids[storngSelf.howManyIsLoaded..<howMuchMore])
             storngSelf.howManyIsLoaded = howMuchMore
-            result = storngSelf.makeNewsItem(arrayFrom: newList, rightAmount: howMuchMore
-            )
+            result = storngSelf.makeNewsItem(arrayFrom: newList, rightAmount: howMuchMore)
         }
         retrieveIdsTask.resume()
         return result
-    }
-    
-    func cancelCurrentDownloading() {
-        isCancelled = true
-        session.invalidateAndCancel()
     }
     
     private func makeNewsItem(arrayFrom newsID: [Int], rightAmount: Int) -> [NewsItem] {
@@ -90,5 +85,10 @@ class NewsAPIService : NewsAPIServiceProtocol {
             }
         }
         return result
+    }
+    
+    func cancelCurrentDownloading() {
+        isCancelled = true
+        session.invalidateAndCancel()
     }
 }

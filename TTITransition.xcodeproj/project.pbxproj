@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		780E11F0207F4558000436D8 /* NewsIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780E11EF207F4558000436D8 /* NewsIcon.swift */; };
+		78237D4320875748006ED511 /* NewsAlamofireAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78237D4220875748006ED511 /* NewsAlamofireAPIService.swift */; };
 		7823ACAE2077539300985A41 /* NewsAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7823ACAD2077539300985A41 /* NewsAPIService.swift */; };
 		782FDA0120762246006A3C0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782FDA0020762246006A3C0C /* AppDelegate.swift */; };
 		782FDA0320762246006A3C0C /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782FDA0220762246006A3C0C /* DetailsViewController.swift */; };
-		782FDA0620762246006A3C0C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 782FDA0420762246006A3C0C /* Main.storyboard */; };
 		782FDA082076224A006A3C0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 782FDA072076224A006A3C0C /* Assets.xcassets */; };
 		782FDA0B2076224A006A3C0C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 782FDA092076224A006A3C0C /* LaunchScreen.storyboard */; };
 		782FDA1820764CC3006A3C0C /* NewsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782FDA1720764CC3006A3C0C /* NewsItem.swift */; };
@@ -20,13 +20,33 @@
 		7832B7BD207E175D00635C47 /* NewsAPIServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7832B7BC207E175D00635C47 /* NewsAPIServiceProtocol.swift */; };
 		7846AD88207E3079001B8FDB /* NewsIconeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7846AD87207E3079001B8FDB /* NewsIconeDelegate.swift */; };
 		784B77F120778A8E00A719AA /* NewsSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B77F020778A8E00A719AA /* NewsSelector.swift */; };
+		7855BA162088E8B700866BF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 782FDA0420762246006A3C0C /* Main.storyboard */; };
+		786BA88E208767030073A18B /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 786BA88D208767030073A18B /* Alamofire.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		786BA8922087748D0073A18B /* NewsAlamofireAPIDelegat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786BA8912087748D0073A18B /* NewsAlamofireAPIDelegat.swift */; };
+		786BA8932087813E0073A18B /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 786BA88D208767030073A18B /* Alamofire.framework */; };
+		786BA8942087813E0073A18B /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 786BA88D208767030073A18B /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		78BA6932207B94E4009028E7 /* NewsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BA6931207B94E4009028E7 /* NewsList.swift */; };
 		78BA6934207CB084009028E7 /* NewsAPIDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BA6933207CB084009028E7 /* NewsAPIDelegate.swift */; };
 		78C0F4F8207DF444002D77DE /* NewsIconService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C0F4F7207DF444002D77DE /* NewsIconService.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		786BA8952087813E0073A18B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				786BA8942087813E0073A18B /* Alamofire.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		780E11EF207F4558000436D8 /* NewsIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsIcon.swift; sourceTree = "<group>"; };
+		78237D4220875748006ED511 /* NewsAlamofireAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAlamofireAPIService.swift; sourceTree = "<group>"; };
 		7823ACAD2077539300985A41 /* NewsAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAPIService.swift; sourceTree = "<group>"; };
 		782FD9FD20762246006A3C0C /* TTITransition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TTITransition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		782FDA0020762246006A3C0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -41,6 +61,8 @@
 		7832B7BC207E175D00635C47 /* NewsAPIServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAPIServiceProtocol.swift; sourceTree = "<group>"; };
 		7846AD87207E3079001B8FDB /* NewsIconeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsIconeDelegate.swift; sourceTree = "<group>"; };
 		784B77F020778A8E00A719AA /* NewsSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsSelector.swift; sourceTree = "<group>"; };
+		786BA88D208767030073A18B /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		786BA8912087748D0073A18B /* NewsAlamofireAPIDelegat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAlamofireAPIDelegat.swift; sourceTree = "<group>"; };
 		78BA6931207B94E4009028E7 /* NewsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsList.swift; sourceTree = "<group>"; };
 		78BA6933207CB084009028E7 /* NewsAPIDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAPIDelegate.swift; sourceTree = "<group>"; };
 		78C0F4F7207DF444002D77DE /* NewsIconService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsIconService.swift; sourceTree = "<group>"; };
@@ -51,6 +73,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				786BA88E208767030073A18B /* Alamofire.framework in Frameworks */,
+				786BA8932087813E0073A18B /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +96,7 @@
 			children = (
 				782FD9FF20762246006A3C0C /* TTITransition */,
 				782FD9FE20762246006A3C0C /* Products */,
+				786BA88C208767020073A18B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,6 +156,8 @@
 				7823ACAD2077539300985A41 /* NewsAPIService.swift */,
 				78BA6933207CB084009028E7 /* NewsAPIDelegate.swift */,
 				7832B7BC207E175D00635C47 /* NewsAPIServiceProtocol.swift */,
+				78237D4220875748006ED511 /* NewsAlamofireAPIService.swift */,
+				786BA8912087748D0073A18B /* NewsAlamofireAPIDelegat.swift */,
 			);
 			path = APIService;
 			sourceTree = "<group>";
@@ -145,6 +172,14 @@
 			path = IconService;
 			sourceTree = "<group>";
 		};
+		786BA88C208767020073A18B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				786BA88D208767030073A18B /* Alamofire.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -155,6 +190,7 @@
 				782FD9F920762246006A3C0C /* Sources */,
 				782FD9FA20762246006A3C0C /* Frameworks */,
 				782FD9FB20762246006A3C0C /* Resources */,
+				786BA8952087813E0073A18B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -205,7 +241,7 @@
 			files = (
 				782FDA0B2076224A006A3C0C /* LaunchScreen.storyboard in Resources */,
 				782FDA082076224A006A3C0C /* Assets.xcassets in Resources */,
-				782FDA0620762246006A3C0C /* Main.storyboard in Resources */,
+				7855BA162088E8B700866BF8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +254,7 @@
 			files = (
 				782FDA1B20764F07006A3C0C /* NewsTableViewController.swift in Sources */,
 				78BA6934207CB084009028E7 /* NewsAPIDelegate.swift in Sources */,
+				78237D4320875748006ED511 /* NewsAlamofireAPIService.swift in Sources */,
 				7823ACAE2077539300985A41 /* NewsAPIService.swift in Sources */,
 				78C0F4F8207DF444002D77DE /* NewsIconService.swift in Sources */,
 				7846AD88207E3079001B8FDB /* NewsIconeDelegate.swift in Sources */,
@@ -228,6 +265,7 @@
 				780E11F0207F4558000436D8 /* NewsIcon.swift in Sources */,
 				7832B7BD207E175D00635C47 /* NewsAPIServiceProtocol.swift in Sources */,
 				784B77F120778A8E00A719AA /* NewsSelector.swift in Sources */,
+				786BA8922087748D0073A18B /* NewsAlamofireAPIDelegat.swift in Sources */,
 				782FDA0120762246006A3C0C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -311,6 +349,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 			};
 			name = Debug;
 		};
@@ -364,6 +403,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -372,8 +412,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 53BMYEMLU9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = TTITransition/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -391,8 +436,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 53BMYEMLU9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = TTITransition/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (

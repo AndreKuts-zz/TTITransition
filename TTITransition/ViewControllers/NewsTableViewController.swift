@@ -8,28 +8,25 @@
 
 import UIKit
 
-private var firstLoad = true
-
 class NewsTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var newsTypeSelector: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var loadingNewNewsIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var loadIndicator: UIActivityIndicatorView!
     
     private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     private let utilityQueue = DispatchQueue.global(qos: .utility)
     
-    private var newsSource: NewsSelection = .new
+    private var newsSource: NewsSource = .new
     private var newsService: NewsAPIServiceProtocol!
-    private var contentOfSize: CGFloat!
     private var numberNewsUpload = 20
+    private var firstLoad = true
     private var isNotDataLoading = false
     private var handlers: [NewsIcon] = []
-    private var iconsImageNews: [NewsIcon] = []
     private var arrayDownloadedNews: [NewsItem] = [] {
         didSet {
             guard !arrayDownloadedNews.isEmpty else { return }
-            createdIcons(fromNews: arrayDownloadedNews)
+            createIcons(fromNews: arrayDownloadedNews)
             isNotDataLoading = true
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
@@ -45,9 +42,9 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadingNewNewsIndicator.isHidden = true
+        loadIndicator.isHidden = true
         addActivityIndicator()
-        newsService = NewsAPIService(delegate: self)
+        newsService = NewsAlamofireAPIService(alamofireDelegate: self)
         self.tableView.estimatedRowHeight = 70
         self.tableView.rowHeight = UITableViewAutomaticDimension
         utilityQueue.async { [weak self] in
@@ -68,19 +65,19 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    func createdIcons(fromNews: [NewsItem]) {
+    func createIcons(fromNews: [NewsItem]) {
         let newNews = Array(arrayDownloadedNews[(numberNewsUpload-20)..<arrayDownloadedNews.count])
         for i in newNews {
             let itm = NewsIcon(from: i.url, andDelegegate: self)
             itm.delegateUpdateIcon = self
-            iconsImageNews.append(itm)
+            handlers.append(itm)
         }
     }
     
     @IBAction func segmentControl(_ sender: UISegmentedControl) {
         newsService.cancelCurrentDownloading()
         numberNewsUpload = 20
-        iconsImageNews = []
+        handlers = []
         arrayDownloadedNews = []
         isNotDataLoading = false
         tableView.reloadData()
@@ -97,7 +94,7 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    // MARK: - Table view data source
+    // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrayDownloadedNews.count
     }
@@ -125,19 +122,19 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
         self.performSegue(withIdentifier: "showDetails", sender: indexPath)
     }
     
+    // MARK: - UITableViewDelegate
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        contentOfSize = scrollView.contentOffset.y + view.frame.height
-        if contentOfSize >= scrollView.contentSize.height - 150 {
+        if (scrollView.contentOffset.y + view.frame.height) >= scrollView.contentSize.height - 150 {
             DispatchQueue.main.async {
                 guard self.isNotDataLoading else {
-                    self.loadingNewNewsIndicator.stopAnimating()
-                    self.loadingNewNewsIndicator.isHidden = true
+                    self.loadIndicator.stopAnimating()
+                    self.loadIndicator.isHidden = true
                     return
                 }
-                self.loadingNewNewsIndicator.startAnimating()
-                self.loadingNewNewsIndicator.isHidden = false
+                self.loadIndicator.startAnimating()
+                self.loadIndicator.isHidden = false
             }
-            DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
+            DispatchQueue.main.async { [weak self] in
                 guard let strongSelf = self else { return }
                 if strongSelf.isNotDataLoading {
                     strongSelf.numberNewsUpload += 20
@@ -158,36 +155,27 @@ class NewsTableViewController: UIViewController, UITableViewDataSource, UITableV
     }
 }
 
-// MARK: - News Icon Service Delegate
+// MARK: - NewsIconLoadDelegate
 extension NewsTableViewController: NewsIconLoadDelegate {
     func dataIsCome(_ service: NewsIconService, imageData: Data) {
-//        iconsImageNews.enumerated().forEach { (offset, newsIcon) in
-//            guard let data = newsIcon.data,
-//                data == imageData,
-//                offset < iconsImageNews.count else { return }
-//            let index = IndexPath(row: offset, section: 0)
-//            DispatchQueue.main.async {
-//            }
-//        }
     }
 }
 
-// MARK: - News Icon Update Cell
+// MARK: - NewsIconUpdateCell
 extension NewsTableViewController: NewsIconUpdateCell {
     func dataIsCome(_ iconObject: NewsIcon, imageData: Data) {
         DispatchQueue.main.async {
-            self.iconsImageNews.enumerated().forEach { (offset, newsIcon) in
-                guard newsIcon.data != nil, iconObject === newsIcon, offset < self.iconsImageNews.count else { return }
-                if offset < self.arrayDownloadedNews.count {
-                    let index = IndexPath(row: offset, section: 0)
-                    self.tableView.reloadRows(at: [index], with: .automatic)
-                }
+            self.handlers.enumerated().forEach { (offset, newsIcon) in
+                guard newsIcon.data != nil, iconObject === newsIcon, offset < self.handlers.count else { return }
+                guard offset < self.arrayDownloadedNews.count else { return }
+                let index = IndexPath(row: offset, section: 0)
+                self.tableView.reloadRows(at: [index], with: .automatic)
             }
         }
     }
 }
 
-//MARK: - News Service Delegate TableViewController
+//MARK: - NewsServiceDelegate
 extension NewsTableViewController : NewsServiceDelegate  {
     func didNewsItemsArrived(_ service: NewsAPIService, news: [NewsItem]) {
         DispatchQueue.main.async {
@@ -196,3 +184,11 @@ extension NewsTableViewController : NewsServiceDelegate  {
     }
 }
 
+//MARK: - NewsAlamofireServiceDelegate
+extension NewsTableViewController: NewsAlamofireServiceDelegate {
+    func didNewsItemsArrived(_ service: NewsAPIServiceProtocol, news: [NewsItem]) {
+        DispatchQueue.main.async {
+            self.arrayDownloadedNews = self.arrayDownloadedNews + news
+        }
+    }
+}
